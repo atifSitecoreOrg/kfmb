@@ -10,11 +10,21 @@ import * as SearchTypeahead from 'src/components/uiim/search/SearchTypeahead';
 import * as SearchResults from 'src/components/uiim/search/SearchResults';
 import * as SearchExperienceV2 from 'src/components/uiim/search/SearchExperienceV2';
 import * as SearchCollection from 'src/components/uiim/search/SearchCollection';
+import * as RecipeListing from 'src/components/uiim/recipe/RecipeListing';
+import * as RecipeDetail from 'src/components/uiim/recipe/RecipeDetail';
+import * as SimilarProducts from 'src/components/uiim/product/SimilarProducts';
+import * as ProductSearch from 'src/components/uiim/product/ProductSearch';
+import * as ProductRecommendations from 'src/components/uiim/product/ProductRecommendations';
+import * as ProductListing from 'src/components/uiim/product/ProductListing';
+import * as ProductDetail from 'src/components/uiim/product/ProductDetail';
 import * as TabNavigationSection from 'src/components/uiim/navigation/TabNavigationSection';
 import * as SiteFooter from 'src/components/uiim/navigation/SiteFooter';
 import * as NavigationHeader from 'src/components/uiim/navigation/NavigationHeader';
 import * as AnnouncementBar from 'src/components/uiim/navigation/AnnouncementBar';
+import * as OversizedCursor from 'src/components/uiim/motion/OversizedCursor';
 import * as SmartMedia from 'src/components/uiim/media/SmartMedia';
+import * as NewsListing from 'src/components/uiim/media/NewsListing';
+import * as MediaCenter from 'src/components/uiim/media/MediaCenter';
 import * as ImageGallery from 'src/components/uiim/media/ImageGallery';
 import * as LandingStats from 'src/components/uiim/landing/LandingStats';
 import * as LandingSocialProof from 'src/components/uiim/landing/LandingSocialProof';
@@ -25,6 +35,10 @@ import * as LandingFAQ from 'src/components/uiim/landing/LandingFAQ';
 import * as NewsletterSignup from 'src/components/uiim/forms/NewsletterSignup';
 import * as IdentityEventDevForm from 'src/components/uiim/forms/IdentityEventDevForm';
 import * as IdentityCaptureForm from 'src/components/uiim/forms/IdentityCaptureForm';
+import * as FactoryListing from 'src/components/uiim/factory/FactoryListing';
+import * as FactoryDetail from 'src/components/uiim/factory/FactoryDetail';
+import * as EventListing from 'src/components/uiim/events/EventListing';
+import * as EventDetail from 'src/components/uiim/events/EventDetail';
 import * as ValuePropositionGrid from 'src/components/uiim/content/ValuePropositionGrid';
 import * as TrustStatsRow from 'src/components/uiim/content/TrustStatsRow';
 import * as RichTextBlock from 'src/components/uiim/content/RichTextBlock';
@@ -90,11 +104,21 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['SearchResults', { ...SearchResults, componentType: 'client' }],
   ['SearchExperienceV2', { ...SearchExperienceV2, componentType: 'client' }],
   ['SearchCollection', { ...SearchCollection, componentType: 'client' }],
+  ['RecipeListing', { ...RecipeListing }],
+  ['RecipeDetail', { ...RecipeDetail }],
+  ['SimilarProducts', { ...SimilarProducts }],
+  ['ProductSearch', { ...ProductSearch, componentType: 'client' }],
+  ['ProductRecommendations', { ...ProductRecommendations }],
+  ['ProductListing', { ...ProductListing }],
+  ['ProductDetail', { ...ProductDetail }],
   ['TabNavigationSection', { ...TabNavigationSection }],
   ['SiteFooter', { ...SiteFooter }],
   ['NavigationHeader', { ...NavigationHeader, componentType: 'client' }],
   ['AnnouncementBar', { ...AnnouncementBar }],
+  ['OversizedCursor', { ...OversizedCursor, componentType: 'client' }],
   ['SmartMedia', { ...SmartMedia, componentType: 'client' }],
+  ['NewsListing', { ...NewsListing }],
+  ['MediaCenter', { ...MediaCenter }],
   ['ImageGallery', { ...ImageGallery }],
   ['LandingStats', { ...LandingStats }],
   ['LandingSocialProof', { ...LandingSocialProof }],
@@ -105,6 +129,10 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['NewsletterSignup', { ...NewsletterSignup, componentType: 'client' }],
   ['IdentityEventDevForm', { ...IdentityEventDevForm, componentType: 'client' }],
   ['IdentityCaptureForm', { ...IdentityCaptureForm, componentType: 'client' }],
+  ['FactoryListing', { ...FactoryListing }],
+  ['FactoryDetail', { ...FactoryDetail }],
+  ['EventListing', { ...EventListing }],
+  ['EventDetail', { ...EventDetail }],
   ['ValuePropositionGrid', { ...ValuePropositionGrid }],
   ['TrustStatsRow', { ...TrustStatsRow }],
   ['RichTextBlock', { ...RichTextBlock }],

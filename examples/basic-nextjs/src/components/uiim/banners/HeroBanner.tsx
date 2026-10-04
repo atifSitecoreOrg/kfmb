@@ -78,14 +78,19 @@ export const Default = ({ fields, params, page }: HeroBannerProps): JSX.Element 
 
   return (
     <div className={cn('component hero-banner', styles)} id={RenderingIdentifier}>
-      <section
-        className="flex min-h-[80vh] w-full items-center justify-center px-4 py-20 text-center"
-        style={{
-          backgroundColor: 'var(--brand-header-bg, #1a1a2e)',
-          color: 'var(--brand-header-fg, #ffffff)',
-        }}
-      >
-        <div className="mx-auto max-w-4xl space-y-6">
+      <section className="relative flex min-h-[70vh] w-full items-end justify-center overflow-hidden px-4 py-16 text-center">
+        {(fields.HeroImage?.value?.src || isEditing) && (
+          <div className="absolute inset-0">
+            <SmartMedia field={fields.HeroImage} fill sizes="100vw" className="object-cover" />
+          </div>
+        )}
+        {!fields.HeroImage?.value?.src && (
+          <div
+            className="absolute inset-0"
+            style={{ backgroundColor: 'var(--brand-header-bg, #1a1a2e)' }}
+          />
+        )}
+        <div className="relative z-10 mx-auto max-w-4xl space-y-6 text-white">
           {(fields.Title?.value || isEditing) && (
             <Text
               field={fields.Title}
@@ -187,7 +192,7 @@ export const BackgroundImage = ({ fields, params, page }: HeroBannerProps): JSX.
           </div>
         )}
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/20" />
         {/* Content */}
         <div className="relative z-10 mx-auto max-w-4xl px-4 py-20 text-center text-white">
           <div className="space-y-6">
@@ -239,7 +244,7 @@ export const VideoBackground = ({ fields, params, page }: HeroBannerProps): JSX.
           </div>
         )}
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/20" />
         {/* Play indicator */}
         <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
           <div

@@ -11,6 +11,7 @@ import Scripts from "src/Scripts";
 import SitecoreStyles from "components/content-sdk/SitecoreStyles";
 import { AppPlaceholder } from "@sitecore-content-sdk/nextjs";
 import componentMap from ".sitecore/component-map";
+import { Default as OversizedCursor } from "./components/uiim/motion/OversizedCursor";
 
 interface LayoutProps {
   page: Page;
@@ -108,6 +109,12 @@ export interface RouteFields {
   finalCtaHeadline?: Field<string>;
   finalCtaSubhead?: RichTextField;
   finalCtaButton?: LinkField;
+  // Event page fields
+  EventDate?: Field<string>;
+  EventLocation?: Field<string>;
+  EventImage?: ImageField;
+  EventSummary?: Field<string>;
+  EventContent?: RichTextField;
 }
 
 const Layout = ({ page }: LayoutProps): JSX.Element => {
@@ -129,6 +136,7 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
       <SitecoreStyles layoutData={layout} />
       {/* root placeholder for the app, which we add components to using route data */}
       <div className={mainClassPageEditing} style={rootStyle}>
+        {route?.name === "Home" && <OversizedCursor />}
         {mode.isDesignLibrary ? (
           route && (
             <DesignLibraryApp

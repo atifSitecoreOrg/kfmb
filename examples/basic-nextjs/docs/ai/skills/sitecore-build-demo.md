@@ -63,11 +63,11 @@ Read `docs/ai/config/credentials.local.yaml`.
 
 **If credentials exist** (`contentHub.host` is populated):
 1. Show the user: *"Found stored Content Hub credentials for `<host>`. Validating..."*
-2. Validate by calling `POST <host>/api/authenticate` with stored user/password
-3. If **200 OK** → credentials are valid, show: *"Content Hub credentials verified for `<host>`."*
+2. If `clientId` and `clientSecret` are set, validate with `POST <host>/oauth/token` using `grant_type=client_credentials`. Otherwise validate with `POST <host>/api/authenticate`.
+3. If **200 OK** and the response contains `access_token` or `token` → credentials are valid, show: *"Content Hub credentials verified for `<host>`."*
 4. If **401 / failed** → credentials are expired or wrong:
-   - Show: *"Stored credentials for `<host>` are invalid (password expired or changed)."*
-   - Ask the user for updated credentials (same flow as "no credentials" below)
+   - Show: *"Stored credentials for `<host>` are invalid."*
+   - Ask the user for an OAuth client id and secret (Manage → OAuth clients, client type Client credentials)
    - Update `credentials.local.yaml` with new values
 
 **If no credentials** (file doesn't exist or `contentHub.host` is empty):
@@ -76,7 +76,7 @@ Read `docs/ai/config/credentials.local.yaml`.
    - **Content Hub hostname** — e.g., `https://your-instance.sitecorecontenthub.cloud`
    - **Username and password**
    - **Client ID and secret** (only if they want OAuth instead of simple auth)
-3. Validate immediately by calling `POST <host>/api/authenticate`
+3. Validate immediately with `POST <host>/oauth/token` (`grant_type=client_credentials`) when a client id and secret were provided, otherwise `POST <host>/api/authenticate`
 4. If **200 OK** → copy from `credentials.example.yaml` to `credentials.local.yaml` and fill in values (gitignored)
 5. Tell the user: *"Credentials saved and verified. They'll be reused for future demo builds. Delete `credentials.local.yaml` to reset."*
 6. If **401 / failed** → ask the user to check and retry
@@ -133,6 +133,15 @@ Use the `sitecore-extract-theme` skill:
 5. Present the theme to the user for review
 
 **Do not proceed past Phase 1 until the user confirms the theme.**
+
+### KFMB and other multi-page demos
+
+Phase 2 still analyzes the homepage, and it also plans the rest of the information architecture:
+
+- Factories & Products and Cooking Books use the Content Hub page types. Do not invent XM product items from scraped HTML when a Content Hub entity exists.
+- Media Center, news articles, and events are already created under `/Home/media-center`. Add stories. Do not replace the Article template or duplicate the hub.
+- Keep image upload on `upload-to-content-hub.mjs`.
+- Plan English first. Arabic is a later pass (`add_language_to_page` plus Content Hub cultures).
 
 ### Phase 2 — Analyze the homepage
 
@@ -315,7 +324,7 @@ Then create each child item under the new parent (see Step 4).
 For each new client datasource item, build a single field update that includes **all field types**:
 
 ```
-update_fields_on_content_item(newItemId, {
+update_fields_on_item(newItemId, {
   // Text fields — from content-map
   "Title": contentMap.sections[N].fields.Title,
   "Description": contentMap.sections[N].fields.Description,
@@ -331,7 +340,7 @@ update_fields_on_content_item(newItemId, {
 **Matching images to fields:** The content-map's `imageFields` array lists `{ field, src }` per section. The `image-manifest.json` maps each `src` URL to its `imageFieldXml`. To wire them:
 1. For each section's `imageFields` entry, find the manifest entry with matching `src`
 2. Use the manifest's `imageFieldXml` as the field value
-3. Include it in the same `update_fields_on_content_item` call as text and link fields
+3. Include it in the same `update_fields_on_item` call as text and link fields
 
 **If images were not uploaded** (Step 1 was skipped), omit Image fields — add them to `images-to-upload.md` for manual handling.
 
@@ -355,7 +364,7 @@ For each child in contentMap.sections[N].children:
     templateId=manifest.templates.child.itemId,
     parentId=<new client parent itemId from Step 2>
   )
-  update_fields_on_content_item(newChildId, {
+  update_fields_on_item(newChildId, {
     // Text + link + image fields — all in one call
     "CardTitle": child.fields.CardTitle,
     "CardDescription": child.fields.CardDescription,
@@ -495,7 +504,7 @@ sections:
 sections[N].phase3.status:
   "pending"   → not started
   "created"   → create_content_item succeeded, itemId recorded
-  "populated" → update_fields_on_content_item succeeded
+  "populated" → update_fields_on_item succeeded
   "failed"    → MCP call returned error, error message recorded
 ```
 

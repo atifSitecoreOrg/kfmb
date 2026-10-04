@@ -107,3 +107,23 @@ capabilities:
         reference (src/components/search-experience/, src/components/uiim/search/SearchExperienceV2.tsx).
         See docs/adr/0006-search-three-component-rebuild.md for the full trail
         and the V2 failure modes that motivated the rebuild.
+
+  - id: content-hub-pim
+    name: "Content Hub product data"
+    description: "Live reads of Content Hub product, factory, and recipe entities. XM pages are the shell. Entities are not copied into XM items."
+    client: "src/lib/content-hub/client.ts"
+    schema: "docs/ai/catalog/content-hub-schema.yaml"
+    discovery: "docs/ai/scripts/content-hub-discover.mjs"
+    endpointContract: "Content Hub REST query API. Marketer MCP cannot read these entities. search_assets is XM media only."
+    searchNote: "Product search uses /api/content-hub/search. Do not send product filters to Edge search; filters are ignored."
+    components:
+      - "ProductListing"
+      - "ProductDetail"
+      - "ProductSearch"
+      - "ProductRecommendations"
+      - "SimilarProducts"
+      - "FactoryListing"
+      - "FactoryDetail"
+      - "RecipeListing"
+      - "RecipeDetail"
+

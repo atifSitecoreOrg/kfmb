@@ -70,9 +70,9 @@ export const Default = ({ fields, params, page }: FeatureHighlightProps): JSX.El
     <div className={cn('component feature-highlight', styles)} id={RenderingIdentifier}>
       <section
         className="w-full px-4 py-16 md:py-24"
-        style={{ backgroundColor: 'var(--brand-bg, #ffffff)' }}
+        style={{ backgroundColor: fields.FeatureImage?.value?.src ? 'var(--brand-bg, #ffffff)' : 'var(--brand-muted, #f4efe4)' }}
       >
-        <div className="mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-2 md:px-6 even:[&]:direction-rtl even:[&>*]:direction-ltr">
+        <div className={fields.FeatureImage?.value?.src ? 'mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-2 md:px-6' : 'mx-auto max-w-3xl text-center'}>
           <div>
             <Eyebrow field={fields.EyebrowText} isEditing={isEditing} />
             {(fields.Title?.value || isEditing) && (
@@ -92,16 +92,16 @@ export const Default = ({ fields, params, page }: FeatureHighlightProps): JSX.El
             )}
             <CtaButton field={fields.PrimaryLink} isEditing={isEditing} />
           </div>
-          <div className="relative h-full min-h-[400px] overflow-hidden rounded-[var(--brand-card-radius,0.75rem)]">
-            {(fields.FeatureImage?.value?.src || isEditing) && (
+          {(fields.FeatureImage?.value?.src || isEditing) && (
+            <div className="relative h-full min-h-[400px] overflow-hidden rounded-[var(--brand-card-radius,0.75rem)]">
               <SmartMedia
                 field={fields.FeatureImage}
                 fill
                 sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </section>
     </div>
@@ -120,7 +120,7 @@ export const Centered = ({ fields, params, page }: FeatureHighlightProps): JSX.E
     <div className={cn('component feature-highlight', styles)} id={RenderingIdentifier}>
       <section
         className="w-full px-4 py-16 md:py-24"
-        style={{ backgroundColor: 'var(--brand-bg, #ffffff)' }}
+        style={{ backgroundColor: 'var(--brand-muted, #f4efe4)' }}
       >
         <div className="mx-auto max-w-4xl">
           <div className="text-center">

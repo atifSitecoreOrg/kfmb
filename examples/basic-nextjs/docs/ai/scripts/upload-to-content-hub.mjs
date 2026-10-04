@@ -165,10 +165,10 @@ const clientSecret = getArg('client-secret') || creds.clientSecret;
 if (!host) { console.error('ERROR: --host or CH_HOST or credentials.local.yaml required'); process.exit(1); }
 // ── Auto-authenticate if no token provided ──
 if (!token && !dryRun) {
-  if (chUser && chPassword && clientId && clientSecret) {
-    // OAuth password grant
-    console.log('[auth] Using OAuth password grant...');
-    const authBody = `grant_type=password&client_id=${encodeURIComponent(clientId)}&client_secret=${encodeURIComponent(clientSecret)}&username=${encodeURIComponent(chUser)}&password=${encodeURIComponent(chPassword)}`;
+  if (clientId && clientSecret) {
+    // OAuth client credentials (M.OAuthClient with Client type = Client credentials)
+    console.log('[auth] Using OAuth client credentials...');
+    const authBody = `grant_type=client_credentials&client_id=${encodeURIComponent(clientId)}&client_secret=${encodeURIComponent(clientSecret)}`;
     const authRes = await fetch(`${host}/oauth/token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -197,7 +197,7 @@ if (!token && !dryRun) {
     token = authJson.token; // Used as X-Auth-Token header, not Bearer
     console.log('[auth] OK — simple token acquired (does not expire)');
   } else {
-    console.error('ERROR: Provide --token, or --user + --password, or --user + --password + --client-id + --client-secret');
+    console.error('ERROR: Provide --token, or --client-id + --client-secret, or --user + --password');
     process.exit(1);
   }
 }

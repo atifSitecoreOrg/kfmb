@@ -482,7 +482,7 @@ Mapping the Sage homepage sections to this catalog:
 | Corporate / Enterprise | Hero, Nav, Cards, Value Props, Stats, Testimonials, CTA, Footer | 100% |
 | Banking / Finance | Hero, Product Cards, Compliance, Stats, CTA, FAQ, Footer | 100% |
 | SaaS / Technology | Hero, Feature Highlight, Pricing Cards, Testimonials, Logo Cloud, FAQ, CTA | 100% |
-| Retail / E-commerce | Hero, Product Cards, Image Gallery, Testimonials, Newsletter, CTA | 100% |
+| Retail / E-commerce | Hero, product cards, image gallery, testimonials, newsletter, CTA | Homepage sections only. Product listing, product detail, and media center are separate page types. |
 | Healthcare / Insurance | Hero, Feature Cards, FAQ, Compliance, Stats, CTA | 100% |
 | Professional Services | Hero, Value Props, Testimonials, Stats, CTA, Footer | 100% |
 
@@ -497,9 +497,9 @@ These patterns are rare or highly custom — the sub-agent builder handles them:
 - Complex multi-step forms
 - Custom animations / parallax storytelling
 - Product comparison tables with feature matrix
-- Video gallery / media center
 - Login / account portals
-- Search results pages
+
+Media center, news listings, event pages, and product search live outside this homepage catalog. See `docs/ai/catalog/page-template-registry.yaml` and `docs/ai/catalog/capabilities-registry.yaml`. Site search results are the SearchResults component. Product search calls Content Hub, because Edge search ignores filters.
 
 ---
 

@@ -3710,3 +3710,56 @@ demoContent:
   # but item still resolves via get_content_item_by_id afterwards — delete did NOT
   # take effect. Status: pendingManual — DELETE MANUALLY in Content Editor before
   # publishing /Home/Articles.
+
+pageTemplatesKfmb:
+  - name: "Product Listing Page Template"
+    itemId: "{7D59E91F-729C-4F0A-9F6F-AF75D0C23B77}"
+    path: "/sitecore/templates/Project/main/Page Types/Product Listing Page Template"
+    standardValues: "{74E1991F-C5F0-4BB1-9445-04DF2B5038F7}"
+  - name: "Product Detail Page Template"
+    itemId: "{B1E97A51-E1FB-49CD-BB5A-97B1425A070E}"
+    standardValues: "{6356B268-5001-40B7-8CD4-AF4A9C72CFFC}"
+  - name: "Factory Listing Page Template"
+    itemId: "{30692F13-8FFC-47FD-BE5C-21D3EBC6E4C3}"
+    standardValues: "{14EE40EC-3C14-4344-81C0-FE056ED0FC12}"
+  - name: "Factory Detail Page Template"
+    itemId: "{AE671A89-DE2E-4507-8ECB-1E527CFC6CA6}"
+    standardValues: "{F3FEA575-6FAE-441F-B822-AFBA1097380B}"
+  - name: "Recipe Listing Page Template"
+    itemId: "{0698F164-5E0A-4364-8994-BA1A03835B1D}"
+    standardValues: "{8419F797-2AD0-49D0-9F8B-D8E7ED10456C}"
+  - name: "Recipe Detail Page Template"
+    itemId: "{5842401A-92DF-4E6B-B888-5205A93C6962}"
+    standardValues: "{C9B20645-6D21-41E6-81AB-C656365238F8}"
+  - name: "Event Page Template"
+    itemId: "{9D57A606-7BCC-48C7-94C8-AB0746F7CDFE}"
+    standardValues: "{28BFA604-6072-4D1F-911D-AF31EEFF8E4C}"
+    section: "{00D8F728-12C1-4279-AE7A-9D31B6B393C5}"
+
+datasourceTemplates:
+  - name: "Catalog Chrome"
+    itemId: "{8EE7C6E4-1903-4F4F-9453-715D82E3243F}"
+    path: "/sitecore/templates/Project/fmc-custom-demo/Components/Catalog Chrome"
+    standardValues: "{BB178678-06EF-4E15-B41F-D9452D7D3DAF}"
+
+kfmbPages:
+  - { name: products, itemId: "{F806661B-11CD-4D53-B5C6-36108ED3060F}", path: "/sitecore/content/main/main-website/Home/products" }
+  - { name: "products/*", itemId: "{DE474867-B183-49F1-8F70-94B57CCB00E5}" }
+  - { name: factories, itemId: "{D3279AB0-FB4D-432E-97F4-0294AA2491E0}" }
+  - { name: "factories/*", itemId: "{B9232662-C0A9-4593-B28C-9D24B877F9FB}" }
+  - { name: recipes, itemId: "{FAE19EB8-6022-42FE-978C-F81AFBA99E2A}" }
+  - { name: "recipes/*", itemId: "{346D091C-B664-4BF5-B1FD-D45393D5CDA1}" }
+  - { name: media-center, itemId: "{A53DA4AC-04F6-48E5-BC3E-0E1EBD508DB6}", path: "/sitecore/content/main/main-website/Home/media-center" }
+  - { name: news, itemId: "{AD6A1523-2503-4558-98D3-194022B97C9A}" }
+  - { name: events, itemId: "{BA6F96B6-0C3C-493E-89CA-C9E9A4493309}" }
+  - { name: food-security-since-1961, itemId: "{40ED9D4D-D303-4C93-9BC7-486DA9184FEB}", template: "Article Page Template" }
+  - { name: committed-presence, itemId: "{F8C457F4-167A-4D66-8A19-5A0B133846ED}", template: "Article Page Template" }
+  - { name: kfmb-coffee-and-expansion, itemId: "{A45B413A-34B6-4E77-9FF4-1B6413131086}", template: "Article Page Template" }
+  - { name: gluten-free-factory, itemId: "{F078108D-6F73-4046-8140-D32727C9A616}", template: "Article Page Template" }
+  - { name: community-exhibitions, itemId: "{58013FB7-E324-45E3-92F6-80638A75848D}", template: "Event Page Template" }
+  - { name: nutritional-awareness, itemId: "{9BBA8AF4-A145-476D-80C2-FD36C3030F5B}", template: "Event Page Template" }
+
+notes:
+  - "2026-10-04: Content Hub OAuth client credentials succeed. Schema mapping is M.PCM.Product, KFMB.Factory, and KFMB.Recipe. Article and event images were not uploaded."
+  - "Variant selection remains manual. add_component_on_page cannot set FieldNames."
+

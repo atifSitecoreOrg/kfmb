@@ -267,3 +267,12 @@ Mark a section as `matchType: "custom"` when:
 - Do not pick a variant just because it sounds cool — match the visual evidence
 - Do not skip sections — every visible section on the page gets an entry
 - Do not include invisible elements (modals, menus that aren't open)
+
+## Multi-page sites
+
+A homepage match is not a site plan. When the client is KFMB, or the brief includes factories, products, cooking books, or a media center:
+
+- Map Factories & Products and Cooking Books to the Content Hub page types in `docs/ai/catalog/page-template-registry.yaml` (`product`, `factory`, `recipe`). Do not create an XM item per product when a Content Hub entity exists.
+- Treat `/media-center`, its news articles, and its events as already created. Add stories later. Do not replace the Article page template or duplicate the hub.
+- News uses the Article page type. Events use the Event page type.
+- English is the first pass. Arabic is a later pass with `add_language_to_page` and Content Hub cultures.

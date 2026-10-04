@@ -50,17 +50,19 @@ const FeatureCardsGridDefaultComponent = (): JSX.Element => (
 const SectionHeader = ({
   datasource,
   isEditing,
+  light,
 }: {
   datasource: FeatureCardsGridDatasource;
   isEditing?: boolean;
+  light?: boolean;
 }) => (
   <div className="mx-auto mb-12 max-w-3xl text-center">
     {(datasource.title?.jsonValue?.value || isEditing) && (
       <Text
         field={datasource.title?.jsonValue}
         tag="h2"
-        className="text-3xl font-bold tracking-tight sm:text-4xl font-[var(--brand-heading-font,inherit)]"
-        style={{ color: 'var(--brand-fg, #111111)' }}
+        className="text-3xl font-bold uppercase tracking-wide sm:text-4xl font-[var(--brand-heading-font,inherit)]"
+        style={{ color: light ? 'var(--brand-primary-foreground, #fff)' : 'var(--brand-fg, #111111)' }}
       />
     )}
     {(datasource.description?.jsonValue?.value || isEditing) && (
@@ -87,25 +89,21 @@ export const Default = ({ fields, params, page }: FeatureCardsGridProps): JSX.El
     <div className={cn('component feature-cards-grid', styles)} id={RenderingIdentifier}>
       <section
         className="w-full px-4 py-16 md:py-24"
-        style={{ backgroundColor: 'var(--brand-bg, #ffffff)' }}
+        style={{ backgroundColor: 'var(--brand-primary, #09509d)', color: 'var(--brand-primary-foreground, #fff)' }}
       >
         <div className="mx-auto max-w-7xl">
-          <SectionHeader datasource={datasource} isEditing={isEditing} />
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <SectionHeader datasource={datasource} isEditing={isEditing} light />
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4">
             {cards.map((card) => (
-              <div
-                key={card.id}
-                className="flex flex-col p-6 rounded-[var(--brand-card-radius,0.75rem)]"
-                style={{
-                  backgroundColor: 'var(--brand-bg, #ffffff)',
-                  border: '1px solid var(--brand-border, #e5e7eb)',
-                }}
-              >
+              <div key={card.id} className="flex flex-col items-center text-center">
                 {(card.cardImage?.jsonValue?.value?.src || isEditing) && (
-                  <div className="mb-4 h-12 w-12 overflow-hidden">
+                  <div
+                    className="mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full transition-transform duration-200 ease-out active:scale-[0.97] motion-reduce:transition-none"
+                    style={{ backgroundColor: 'var(--brand-accent, #ff8c00)' }}
+                  >
                     <ContentSdkImage
                       field={card.cardImage?.jsonValue}
-                      className="h-full w-full object-contain"
+                      className="h-10 w-10 object-contain"
                     />
                   </div>
                 )}
@@ -113,8 +111,8 @@ export const Default = ({ fields, params, page }: FeatureCardsGridProps): JSX.El
                   <Text
                     field={card.cardTitle?.jsonValue}
                     tag="h3"
-                    className="text-lg font-semibold font-[var(--brand-heading-font,inherit)]"
-                    style={{ color: 'var(--brand-fg, #111111)' }}
+                    className="text-sm font-bold uppercase tracking-wide font-[var(--brand-heading-font,inherit)]"
+                    style={{ color: 'var(--brand-primary-foreground, #fff)' }}
                   />
                 )}
                 {(card.cardDescription?.jsonValue?.value || isEditing) && (
@@ -312,72 +310,50 @@ export const Carousel = ({ fields, params, page }: FeatureCardsGridProps): JSX.E
     <div className={cn('component feature-cards-grid', styles)} id={RenderingIdentifier}>
       <section
         className="w-full px-4 py-16 md:py-24"
-        style={{ backgroundColor: 'var(--brand-bg, #ffffff)' }}
+        style={{ backgroundColor: 'var(--brand-primary, #09509d)' }}
       >
         <div className="mx-auto max-w-7xl">
-          <SectionHeader datasource={datasource} isEditing={isEditing} />
+          <SectionHeader datasource={datasource} isEditing={isEditing} light />
 
           {/* Carousel track */}
           <div className="relative">
             <div className="overflow-hidden">
               <div
-                className="flex transition-transform duration-500 ease-in-out"
+                className="flex transition-transform duration-500 ease-out motion-reduce:transition-none"
                 style={{ transform: `translateX(-${clampedPage * 100}%)` }}
               >
-                {/* Render all cards in a single row; each card takes 1/visibleCount width */}
                 {cards.map((card) => (
                   <div
                     key={card.id}
                     className="flex-shrink-0 px-3"
                     style={{ width: `${100 / visibleCount}%` }}
                   >
-                    <div className="group relative flex flex-col overflow-hidden rounded-[var(--brand-card-radius,0.75rem)] h-full">
-                      {/* Card image — tall portrait ratio */}
-                      {(card.cardImage?.jsonValue?.value?.src || isEditing) && (
-                        <div className="relative aspect-[3/4] overflow-hidden">
+                    <div className="flex h-full flex-col items-center text-center">
+                      <div
+                        className="mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full"
+                        style={{ backgroundColor: 'var(--brand-accent, #ff8c00)' }}
+                      >
+                        {(card.cardImage?.jsonValue?.value?.src || isEditing) && (
                           <ContentSdkImage
                             field={card.cardImage?.jsonValue}
-                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            className="h-10 w-10 object-contain"
                           />
-                          {/* Bottom gradient for text readability */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                          {/* Overlay content */}
-                          <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                            {(card.cardTitle?.jsonValue?.value || isEditing) && (
-                              <Text
-                                field={card.cardTitle?.jsonValue}
-                                tag="h3"
-                                className="text-lg font-bold tracking-tight font-[var(--brand-heading-font,inherit)] uppercase"
-                              />
-                            )}
-                            {(card.cardLink?.jsonValue?.value?.href || isEditing) && (
-                              <ContentSdkLink
-                                field={card.cardLink?.jsonValue}
-                                className="mt-3 inline-flex items-center justify-center rounded-[var(--brand-button-radius,0.375rem)] border border-white px-5 py-2 text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black"
-                              />
-                            )}
-                          </div>
-                        </div>
+                        )}
+                      </div>
+                      {(card.cardTitle?.jsonValue?.value || isEditing) && (
+                        <Text
+                          field={card.cardTitle?.jsonValue}
+                          tag="h3"
+                          className="text-sm font-bold uppercase tracking-wide font-[var(--brand-heading-font,inherit)]"
+                          style={{ color: 'var(--brand-primary-foreground, #fff)' }}
+                        />
                       )}
-                      {/* Fallback: show title + description below if no image */}
-                      {!card.cardImage?.jsonValue?.value?.src && !isEditing && (
-                        <div className="flex flex-1 flex-col p-6">
-                          {(card.cardTitle?.jsonValue?.value || isEditing) && (
-                            <Text
-                              field={card.cardTitle?.jsonValue}
-                              tag="h3"
-                              className="text-lg font-semibold font-[var(--brand-heading-font,inherit)]"
-                              style={{ color: 'var(--brand-fg, #111111)' }}
-                            />
-                          )}
-                          {(card.cardDescription?.jsonValue?.value || isEditing) && (
-                            <ContentSdkRichText
-                              field={card.cardDescription?.jsonValue}
-                              className="mt-2 flex-1 text-sm opacity-70"
-                              style={{ color: 'var(--brand-fg, #111111)' }}
-                            />
-                          )}
-                        </div>
+                      {(card.cardLink?.jsonValue?.value?.href || isEditing) && (
+                        <ContentSdkLink
+                          field={card.cardLink?.jsonValue}
+                          className="mt-3 text-xs font-semibold uppercase tracking-wide"
+                          style={{ color: 'var(--brand-accent, #ff8c00)' }}
+                        />
                       )}
                     </div>
                   </div>
@@ -429,9 +405,10 @@ export const Carousel = ({ fields, params, page }: FeatureCardsGridProps): JSX.E
                       : 'opacity-40 hover:opacity-70'
                   )}
                   style={{
-                    backgroundColor: i === clampedPage
-                      ? 'var(--brand-fg, #111)'
-                      : 'var(--brand-fg, #111)',
+                    backgroundColor:
+                      i === clampedPage
+                        ? 'var(--brand-accent, #ff8c00)'
+                        : 'var(--brand-primary-foreground, #fff)',
                   }}
                   aria-label={`Go to page ${i + 1}`}
                 />

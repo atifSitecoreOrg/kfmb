@@ -20,12 +20,12 @@ Do **not** claim that marketer MCP cannot create templates or renderings.
 
 **Content items:**
 - `create_content_item` — Create item with parent + template
-- `update_fields_on_content_item` — Update fields on existing item
+- `update_fields_on_item` — Update fields on an existing item. `update_content` is the sibling tool for workflow-aware updates (it versions an item that is already in a final state).
 - `get_content_item_by_path` — Resolve item IDs by path
 - `get_content_item_by_id` — Inspect item after create/update
 - `delete_content` — Delete items (only if safe and explicitly requested)
 - `list_components` — Inspect existing renderings/components
-- `list_available_insertoptions` — Inspect insert options (content items only)
+- `list_avail_insertopts` — Inspect insert options (content items only). The live tool name is `list_avail_insertopts`, not `list_available_insertoptions`.
 
 **Assets (search/verify only — upload uses Content Hub API, not MCP):**
 - `search_assets` — Search for assets by name/path
@@ -73,7 +73,7 @@ The script performs 5 steps per image:
 
 **Image field format (DAM):**
 ```
-update_fields_on_content_item(itemId, {
+update_fields_on_item(itemId, {
   "HeroImage": '<Image src="https://<CH_HOST>/api/public/content/<assetId>-<name>?v=<hash>" dam-id="<assetIdentifier>" width="<width>" height="<height>" alt="Description" dam-content-type="Image" thumbnailsrc="https://<CH_HOST>/api/gateway/<assetId>/thumbnail" />'
 })
 ```
@@ -121,7 +121,7 @@ For list components, create one parent + one or two child items.
 
 ## Known Tool Behavior
 
-### `list_available_insertoptions`
+### `list_avail_insertopts`
 
 Most reliable for content items in a site content tree. For template inspection under `/sitecore/templates/...`, prefer `get_content_item_by_path` or `get_content_item_by_id`.
 
@@ -201,3 +201,30 @@ Known IDs:
 - Datasource folder: `/sitecore/content/new/fmc/Data/Video Testimonials`
 - Rendering Parameters: `/sitecore/templates/Project/new/Rendering Parameters/Content/Video Testimonial`
 - Rendering: `/sitecore/layout/Renderings/Project/new/Content/Video Testimonial`
+
+## Page assembly
+
+These tools exist on the live Marketer MCP and are the path for placing components:
+
+- `add_component_on_page` — adds a rendering to a placeholder and creates a local datasource. `fields` accepts datasource fields only.
+- `get_components_on_page` — reads placed components, including `FieldNames` after a manual variant change.
+- `set_component_datasource` — points a placed component at a shared datasource.
+- `get_page`, `get_page_html`, `get_page_screenshot`, `get_page_preview_url` — read the assembled page.
+- `insertAfterComponentId` and `insertBeforeComponentId` are accepted by `add_component_on_page` and are still untested.
+
+`add_component_on_page` cannot set rendering parameters. See `agent-api-limitations.md`. There is no `remove_component_from_page` tool. `set_component_variant` configures an A/B or personalization variant (copy, swap, or hide). It does not write the headless `FieldNames` parameter.
+
+Experimental Pages-editor workaround for variants: `docs/ai/scripts/apply-variants.mjs`. It is not the supported path.
+
+## Personalization, tests, and briefs
+
+- `create_perso_version`, `create_perso_version_multi`, `update_perso_version`, `get_perso_ver_by_page`, `list_page_flows`
+- `create_component_ab_test`, `update_ab_test`, `get_flow_definition`, `get_flow_variant_by_id`
+- `list_briefs`, `list_brief_types`, `generate_brief_draft`, `create_brief_from_draft`
+- `list_brandkits`, `get_brandkit_by_id`, `list_brand_contexts`
+
+Personalization and brief tools ask for confirmation before they change a page. They do not read Content Hub product entities.
+
+## Content Hub PIM
+
+`search_assets`, `get_asset_information`, and `update_asset` address XM media. They do not query Content Hub product, factory, or recipe entities. Image upload uses `docs/ai/scripts/upload-to-content-hub.mjs`. Entity discovery uses `docs/ai/scripts/content-hub-discover.mjs`. There is no `upload_asset` tool.

@@ -35,16 +35,16 @@ export const Default = ({ fields, params, page }: RichTextBlockProps): JSX.Eleme
   return (
     <div className={cn('component rich-text-block', styles)} id={RenderingIdentifier}>
       <section
-        className="w-full px-4 py-12 md:py-16"
-        style={{ backgroundColor: 'var(--brand-bg, #ffffff)' }}
+        className="w-full px-4 py-16 md:py-24"
+        style={{ backgroundColor: 'var(--brand-muted, #f4efe4)' }}
       >
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-3xl">
           {(fields.Title?.value || isEditing) && (
             <Text
               field={fields.Title}
               tag="h2"
-              className="mb-6 text-2xl font-bold md:text-3xl font-[var(--brand-heading-font,inherit)]"
-              style={{ color: 'var(--brand-fg, #111111)' }}
+              className="mb-6 text-3xl font-bold uppercase tracking-tight md:text-4xl font-[var(--brand-heading-font,inherit)]"
+              style={{ color: 'var(--brand-primary, #09509d)' }}
             />
           )}
           {(fields.Body?.value || isEditing) && (

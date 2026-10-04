@@ -230,7 +230,7 @@ Script: `docs/ai/scripts/upload-to-content-hub.mjs`
 4. `POST /api/entities/{id}/lifecycle/approve` — auto-approve (Created → Approved)
 5. `POST /api/entities` (M.PublicLink) — create public link for working public URL
 
-**Auth:** Simple auth (`POST /api/authenticate` with username/password) or OAuth password grant. Credentials stored in `docs/ai/config/credentials.local.yaml` (gitignored).
+**Auth:** OAuth client credentials (`POST /oauth/token` with `grant_type=client_credentials`). The bearer token is sent as `Authorization` on both the Upload API and the Entities API. Username/password simple auth remains a fallback when no OAuth client is configured. Credentials live in `docs/ai/config/credentials.local.yaml` (gitignored).
 
 ### Image field format (DAM)
 
@@ -249,7 +249,7 @@ The upload script writes `imageFieldXml` to `image-manifest.json` — use direct
 
 Phase 2.5: `content-extractor.mjs --download-images` downloads all section images locally
 Phase 3 Step 1: `upload-to-content-hub.mjs` uploads + approves + creates public links with `{assetId}-{name}` URL format
-Phase 3 Step 3: Agent reads `imageFieldXml` from manifest, includes Image fields in same `update_fields_on_content_item` call as text + link fields
+Phase 3 Step 3: Agent reads `imageFieldXml` from manifest, includes Image fields in same `update_fields_on_item` call as text + link fields
 
 ### MCP asset tools (for search/verify only)
 
@@ -301,3 +301,21 @@ Keyphrase matching is loose (OR-like across words): a multi-word query matches d
 - Marketer MCP tools reference: https://doc.sitecore.com/sai/en/users/sitecoreai/marketer-mcp-tools-reference.html
 - Pages API (UpdateFields): `PATCH /api/v1/pages/{pageId}` — page fields only, not component parameters
 - Test evidence: `docs/ai/demos/home-page-components.json` — Home page component dump showing FieldNames values
+
+## 7. `set_component_variant` is not a headless variant writer
+
+**Date checked:** 2026-10-04
+
+`set_component_variant` configures a component inside an existing A/B test or personalization flow (copy, swap, or hide). It does not set the `FieldNames` rendering parameter that selects a headless variant. Section 1 still stands: there is no write path for `FieldNames`, `GridParameters`, `Styles`, `RenderingIdentifier`, or `CSSStyles`.
+
+`docs/ai/scripts/apply-variants.mjs` is an experimental Playwright workaround for the Pages editor. Treat it as fragile.
+
+`insertAfterComponentId` and `insertBeforeComponentId` on `add_component_on_page` remain untested.
+
+## 8. Marketer MCP cannot read Content Hub PIM entities
+
+**Date checked:** 2026-10-04
+
+`search_assets` searches XM media, not Content Hub products, factories, or recipes. Product search for the KFMB demo uses the Content Hub query API from the Next.js server (`src/lib/content-hub/client.ts`). Edge search (`POST /v1/search`) still ignores filters, so it is not the product catalog.
+
+OAuth client credentials against the host in `credentials.local.yaml` returns a one-hour bearer token, and `GET /api/entitydefinitions` accepts that token. Run `docs/ai/scripts/content-hub-discover.mjs` to refresh `docs/ai/catalog/content-hub-schema.yaml`. The example credentials file must stay free of real secrets.

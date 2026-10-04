@@ -37,7 +37,7 @@ const PrimaryButton = ({ field, isEditing, className }: { field: LinkField; isEd
     <ContentSdkLink
       field={field}
       className={cn(
-        'inline-flex items-center justify-center px-6 py-3 text-sm font-semibold transition-opacity hover:opacity-90 rounded-[var(--brand-button-radius,0.375rem)]',
+        'inline-flex items-center justify-center px-6 py-3 text-sm font-semibold rounded-[var(--brand-button-radius,0.375rem)] transition-transform duration-150 ease-out active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100',
         className
       )}
     />

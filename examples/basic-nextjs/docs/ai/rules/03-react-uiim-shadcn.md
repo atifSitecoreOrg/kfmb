@@ -157,6 +157,14 @@ When a new component is created:
 - mixing plain HTML rendering with Sitecore field helpers for the same authorable field
 - introducing a new pattern that conflicts with nearby components
 
+## Design skills
+
+When creating or restyling a UIIM component, follow the project skills in `.cursor/skills` before inventing a new visual system:
+
+- `frontend-design` — a specific KFMB look: warm mill and bakery surfaces, editorial type, real product photography. Theme CSS variables still own the brand colors.
+- `emil-design-eng`, `animate`, and `review-animations` — ease-out enters, short durations, soft shadows instead of heavy borders, and a reduced-motion path.
+- `oversized-cursor` — homepage accent only, and only when the visitor has a fine pointer and has not asked for reduced motion.
+
 ## Repo-first rule
 If the repository clearly uses a different local convention:
 - follow the repository convention

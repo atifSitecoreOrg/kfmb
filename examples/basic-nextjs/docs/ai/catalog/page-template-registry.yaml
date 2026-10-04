@@ -288,3 +288,123 @@ pageTemplates:
       noControlBooleans: "Visibility derives from emptiness. No showSecondaryCta or hideTestimonial flags."
       variantSelection: "Layout choice is a Variant Definition picker, not a template field."
       personalizationReady: "Every field individually personalizable via Sitecore Personalize. ABM = same template, different field values per audience."
+
+  - id: product-listing
+    name: "Product Listing Page"
+    inheritsFrom: "base-page-template"
+    description: "Catalog index. Thin route chrome. Product cards come from Content Hub at render time."
+    templateSection: "Catalog Data"
+    fields:
+      - { name: "catalogIntro", type: "Rich Text", purpose: "short introduction above the Content Hub product grid" }
+    contextComponents:
+      - id: product-listing
+        name: "ProductListing"
+        filePath: "src/components/uiim/product/ProductListing.tsx"
+      - id: product-search
+        name: "ProductSearch"
+        filePath: "src/components/uiim/product/ProductSearch.tsx"
+    contentTree:
+      parentPage:
+        name: "products"
+        path: "/Home/products"
+
+  - id: product-detail
+    name: "Product Detail Page"
+    inheritsFrom: "base-page-template"
+    description: "Wildcard detail page. The URL segment is the Content Hub identifier."
+    contextComponents:
+      - id: product-detail
+        name: "ProductDetail"
+        filePath: "src/components/uiim/product/ProductDetail.tsx"
+      - id: similar-products
+        name: "SimilarProducts"
+        filePath: "src/components/uiim/product/SimilarProducts.tsx"
+      - id: product-recommendations
+        name: "ProductRecommendations"
+        filePath: "src/components/uiim/product/ProductRecommendations.tsx"
+    contentTree:
+      parentPage:
+        name: "*"
+        path: "/Home/products/*"
+
+  - id: factory-listing
+    name: "Factory Listing Page"
+    inheritsFrom: "base-page-template"
+    description: "Factory index fed by Content Hub."
+    contextComponents:
+      - id: factory-listing
+        name: "FactoryListing"
+        filePath: "src/components/uiim/factory/FactoryListing.tsx"
+    contentTree:
+      parentPage:
+        name: "factories"
+        path: "/Home/factories"
+
+  - id: factory-detail
+    name: "Factory Detail Page"
+    inheritsFrom: "base-page-template"
+    description: "Wildcard factory page fed by Content Hub."
+    contextComponents:
+      - id: factory-detail
+        name: "FactoryDetail"
+        filePath: "src/components/uiim/factory/FactoryDetail.tsx"
+    contentTree:
+      parentPage:
+        name: "*"
+        path: "/Home/factories/*"
+
+  - id: recipe-listing
+    name: "Recipe Listing Page"
+    inheritsFrom: "base-page-template"
+    description: "Cooking books index fed by Content Hub recipe entities."
+    contextComponents:
+      - id: recipe-listing
+        name: "RecipeListing"
+        filePath: "src/components/uiim/recipe/RecipeListing.tsx"
+    contentTree:
+      parentPage:
+        name: "recipes"
+        path: "/Home/recipes"
+
+  - id: recipe-detail
+    name: "Recipe Detail Page"
+    inheritsFrom: "base-page-template"
+    description: "Wildcard recipe page fed by Content Hub."
+    contextComponents:
+      - id: recipe-detail
+        name: "RecipeDetail"
+        filePath: "src/components/uiim/recipe/RecipeDetail.tsx"
+    contentTree:
+      parentPage:
+        name: "*"
+        path: "/Home/recipes/*"
+
+  - id: event
+    name: "Event Page"
+    inheritsFrom: "base-page-template"
+    description: "KFMB community event. News stays on the Article page type."
+    templateSection: "Event Data"
+    fields:
+      - { name: "EventDate", type: "Date", purpose: "event date" }
+      - { name: "EventLocation", type: "Single-Line Text", purpose: "where the event happens" }
+      - { name: "EventImage", type: "Image", purpose: "event image" }
+      - { name: "EventSummary", type: "Single-Line Text", purpose: "one-line summary for listings" }
+      - { name: "EventContent", type: "Rich Text", purpose: "event body" }
+    contextComponents:
+      - id: event-detail
+        name: "EventDetail"
+        filePath: "src/components/uiim/events/EventDetail.tsx"
+      - id: event-listing
+        name: "EventListing"
+        filePath: "src/components/uiim/events/EventListing.tsx"
+      - id: media-center
+        name: "MediaCenter"
+        filePath: "src/components/uiim/media/MediaCenter.tsx"
+      - id: news-listing
+        name: "NewsListing"
+        filePath: "src/components/uiim/media/NewsListing.tsx"
+    contentTree:
+      parentPage:
+        name: "media-center"
+        path: "/Home/media-center"
+

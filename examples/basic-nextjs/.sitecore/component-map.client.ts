@@ -7,7 +7,9 @@ import * as SearchTypeahead from 'src/components/uiim/search/SearchTypeahead';
 import * as SearchResults from 'src/components/uiim/search/SearchResults';
 import * as SearchExperienceV2 from 'src/components/uiim/search/SearchExperienceV2';
 import * as SearchCollection from 'src/components/uiim/search/SearchCollection';
+import * as ProductSearch from 'src/components/uiim/product/ProductSearch';
 import * as NavigationHeader from 'src/components/uiim/navigation/NavigationHeader';
+import * as OversizedCursor from 'src/components/uiim/motion/OversizedCursor';
 import * as SmartMedia from 'src/components/uiim/media/SmartMedia';
 import * as LandingFAQ from 'src/components/uiim/landing/LandingFAQ';
 import * as NewsletterSignup from 'src/components/uiim/forms/NewsletterSignup';
@@ -50,7 +52,9 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['SearchResults', { ...SearchResults }],
   ['SearchExperienceV2', { ...SearchExperienceV2 }],
   ['SearchCollection', { ...SearchCollection }],
+  ['ProductSearch', { ...ProductSearch }],
   ['NavigationHeader', { ...NavigationHeader }],
+  ['OversizedCursor', { ...OversizedCursor }],
   ['SmartMedia', { ...SmartMedia }],
   ['LandingFAQ', { ...LandingFAQ }],
   ['NewsletterSignup', { ...NewsletterSignup }],
