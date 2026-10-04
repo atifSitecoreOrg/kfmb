@@ -38,16 +38,21 @@ const SiteFooterDefaultComponent = (): JSX.Element => (
 
 const LINK_COLUMNS = [
   {
-    title: 'Products',
-    links: ['Overview', 'Features', 'Pricing', 'Integrations'],
-  },
-  {
     title: 'Company',
-    links: ['About', 'Careers', 'Blog', 'Press'],
+    links: [
+      { label: 'About', href: '/about' },
+      { label: 'Careers', href: '/careers' },
+      { label: 'Contact', href: '/contact' },
+      { label: 'Media Center', href: '/media-center' },
+    ],
   },
   {
-    title: 'Support',
-    links: ['Help Center', 'Contact', 'Documentation', 'Status'],
+    title: 'Our work',
+    links: [
+      { label: 'Products', href: '/products' },
+      { label: 'Factories', href: '/factories' },
+      { label: 'Recipes', href: '/recipes' },
+    ],
   },
 ];
 
@@ -65,9 +70,7 @@ const Logo = ({ brandLogo }: { brandLogo?: ImageField }) => {
           className="h-8 w-auto object-contain brightness-0 invert sm:h-10"
         />
       ) : (
-        <>
-          <span style={{ color: 'var(--brand-primary)' }}>Brand</span>Logo
-        </>
+        <>KFMB</>
       )}
     </Link>
   );
@@ -81,9 +84,8 @@ const SocialIcons = () => (
         href="#"
         className="flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold transition-opacity hover:opacity-70"
         style={{
-          backgroundColor: 'var(--brand-footer-fg, #ffffff)',
-          color: 'var(--brand-footer-bg, #111111)',
-          opacity: 0.2,
+          backgroundColor: 'var(--brand-accent, #ff8c00)',
+          color: '#ffffff',
         }}
         aria-label={label}
       >
@@ -98,7 +100,7 @@ const Copyright = () => (
     className="text-sm opacity-50 font-[var(--brand-body-font,inherit)]"
     style={{ color: 'var(--brand-footer-fg, #ffffff)' }}
   >
-    &copy; {new Date().getFullYear()} BrandName. All rights reserved.
+    &copy; {new Date().getFullYear()} KFMB. All rights reserved.
   </p>
 );
 
@@ -126,30 +128,24 @@ export const Default = (props: SiteFooterProps): JSX.Element => {
             {/* Logo + description */}
             <div className="md:col-span-2 space-y-4">
               <Logo brandLogo={brandLogo} />
-              <p
-                className="max-w-xs text-sm opacity-60 font-[var(--brand-body-font,inherit)]"
-              >
-                Building the future of digital experiences. Trusted by teams worldwide.
-              </p>
               <SocialIcons />
             </div>
 
-            {/* Link columns */}
             {LINK_COLUMNS.map((col) => (
               <div key={col.title}>
                 <h3
-                  className="mb-3 text-sm font-semibold uppercase tracking-wider opacity-70 font-[var(--brand-heading-font,inherit)]"
+                  className="mb-3 text-sm font-semibold uppercase tracking-wider font-[var(--brand-heading-font,inherit)]"
                 >
                   {col.title}
                 </h3>
                 <ul className="space-y-2">
                   {col.links.map((link) => (
-                    <li key={link}>
+                    <li key={link.href}>
                       <a
-                        href="#"
-                        className="text-sm opacity-60 transition-opacity hover:opacity-100 font-[var(--brand-body-font,inherit)]"
+                        href={link.href}
+                        className="text-sm transition-opacity hover:opacity-100 font-[var(--brand-body-font,inherit)]"
                       >
-                        {link}
+                        {link.label}
                       </a>
                     </li>
                   ))}
@@ -157,18 +153,12 @@ export const Default = (props: SiteFooterProps): JSX.Element => {
               </div>
             ))}
           </div>
-
-          {/* Bottom bar */}
-          <div
-            className="mt-10 flex flex-col items-center justify-between gap-4 border-t pt-8 sm:flex-row"
-            style={{ borderColor: 'rgba(255,255,255,0.1)' }}
-          >
-            <Copyright />
-            <div className="flex gap-6 text-sm opacity-50">
-              <a href="#" className="hover:opacity-100 transition-opacity">Privacy Policy</a>
-              <a href="#" className="hover:opacity-100 transition-opacity">Terms of Service</a>
-            </div>
-          </div>
+        </div>
+        <div
+          className="flex flex-col items-center justify-between gap-2 px-4 py-3 text-sm sm:flex-row sm:px-8"
+          style={{ backgroundColor: 'var(--brand-accent, #ff8c00)', color: '#ffffff' }}
+        >
+          <p>&copy; {new Date().getFullYear()} KFMB. All rights reserved.</p>
         </div>
       </footer>
     </div>
@@ -288,8 +278,8 @@ export const MegaFooter = (props: SiteFooterProps): JSX.Element => {
           <div className="grid gap-8 md:grid-cols-6">
             <div className="md:col-span-2 space-y-4">
               <Logo brandLogo={brandLogo} />
-              <p className="max-w-xs text-sm opacity-60 font-[var(--brand-body-font,inherit)]">
-                Building the future of digital experiences. Trusted by teams worldwide.
+              <p className="max-w-xs text-sm opacity-80 font-[var(--brand-body-font,inherit)]">
+                Kuwait Flour Mills &amp; Bakeries
               </p>
               <SocialIcons />
             </div>
@@ -301,9 +291,9 @@ export const MegaFooter = (props: SiteFooterProps): JSX.Element => {
                 </h3>
                 <ul className="space-y-2">
                   {col.links.map((link) => (
-                    <li key={link}>
-                      <a href="#" className="text-sm opacity-60 transition-opacity hover:opacity-100 font-[var(--brand-body-font,inherit)]">
-                        {link}
+                    <li key={link.href}>
+                      <a href={link.href} className="text-sm opacity-80 transition-opacity hover:opacity-100 font-[var(--brand-body-font,inherit)]">
+                        {link.label}
                       </a>
                     </li>
                   ))}

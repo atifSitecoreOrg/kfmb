@@ -62,34 +62,37 @@ export const Default = ({ fields, params, page }: CTABannerProps): JSX.Element =
   const isEditing = page?.mode?.isEditing;
   if (!fields) return <CTABannerDefaultComponent />;
 
+  const hasImage = Boolean(fields.BackgroundImage?.value?.src);
+
   return (
     <div className={cn('component cta-banner', styles)} id={RenderingIdentifier}>
-      <section
-        className="w-full px-4 py-16 md:py-24"
-        style={{
-          backgroundColor: 'var(--brand-primary)',
-          color: 'var(--brand-primary-foreground)',
-        }}
-      >
-        <div className="mx-auto max-w-3xl text-center">
+      <section className="relative w-full min-h-[300px] overflow-hidden bg-white">
+        {(hasImage || isEditing) && (
+          <div className="absolute inset-0">
+            <SmartMedia field={fields.BackgroundImage} fill sizes="100vw" className="object-cover object-center" />
+          </div>
+        )}
+        <div className="relative z-10 mx-auto flex min-h-[300px] w-full max-w-xl flex-col items-center justify-center bg-white px-8 py-14 text-center">
+          {(fields.Description?.value || isEditing) && (
+            <ContentSdkRichText
+              field={fields.Description}
+              className="font-[family-name:var(--brand-script-font,cursive)] text-5xl leading-none md:text-6xl"
+              style={{ color: 'var(--brand-accent, #ff8c00)' }}
+            />
+          )}
           {(fields.Title?.value || isEditing) && (
             <Text
               field={fields.Title}
               tag="h2"
-              className="text-3xl font-bold tracking-tight sm:text-4xl font-[var(--brand-heading-font,inherit)]"
+              className="mt-2 text-2xl font-bold uppercase tracking-[0.12em] sm:text-3xl font-[var(--brand-heading-font,inherit)]"
+              style={{ color: 'var(--brand-primary, #09509d)' }}
             />
           )}
-          {(fields.Description?.value || isEditing) && (
-            <ContentSdkRichText
-              field={fields.Description}
-              className="mt-4 text-lg opacity-90 font-[var(--brand-body-font,inherit)]"
-            />
-          )}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
             <PrimaryButton
               field={fields.PrimaryLink}
               isEditing={isEditing}
-              className="bg-[var(--brand-primary-foreground)] text-[var(--brand-primary)]"
+              className="bg-[var(--brand-accent,#ff8c00)] text-white"
             />
             <SecondaryButton field={fields.SecondaryLink} isEditing={isEditing} />
           </div>

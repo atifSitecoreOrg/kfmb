@@ -177,44 +177,56 @@ export const BackgroundImage = ({ fields, params, page }: HeroBannerProps): JSX.
 
   if (!fields) return <HeroBannerDefaultComponent />;
 
+  const hasCopy = Boolean(
+    fields.Title?.value ||
+      fields.Subtitle?.value ||
+      fields.PrimaryLink?.value?.href ||
+      fields.SecondaryLink?.value?.href
+  );
+
   return (
     <div className={cn('component hero-banner', styles)} id={RenderingIdentifier}>
-      <section className="relative flex min-h-[80vh] w-full items-center justify-center overflow-hidden">
-        {/* Background image */}
+      <section
+        className={cn(
+          'relative w-full overflow-hidden',
+          hasCopy || isEditing ? 'flex min-h-[70vh] items-center justify-center' : 'aspect-[21/9] min-h-[240px] max-h-[70vh]'
+        )}
+      >
         {(fields.HeroImage?.value?.src || isEditing) && (
           <div className="absolute inset-0">
             <SmartMedia
               field={fields.HeroImage}
               fill
+              priority
               sizes="100vw"
               className="object-cover"
             />
           </div>
         )}
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/20" />
-        {/* Content */}
-        <div className="relative z-10 mx-auto max-w-4xl px-4 py-20 text-center text-white">
-          <div className="space-y-6">
-            {(fields.Title?.value || isEditing) && (
-              <Text
-                field={fields.Title}
-                tag="h1"
-                className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl font-[var(--brand-heading-font,inherit)]"
-              />
-            )}
-            {(fields.Subtitle?.value || isEditing) && (
-              <ContentSdkRichText
-                field={fields.Subtitle}
-                className="mx-auto max-w-2xl text-lg opacity-90"
-              />
-            )}
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-              <PrimaryButton field={fields.PrimaryLink} isEditing={isEditing} />
-              <SecondaryButton field={fields.SecondaryLink} isEditing={isEditing} />
+        {(hasCopy || isEditing) && <div className="absolute inset-0 bg-black/20" />}
+        {(hasCopy || isEditing) && (
+          <div className="relative z-10 mx-auto max-w-4xl px-4 py-20 text-center text-white">
+            <div className="space-y-6">
+              {(fields.Title?.value || isEditing) && (
+                <Text
+                  field={fields.Title}
+                  tag="h1"
+                  className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl font-[var(--brand-heading-font,inherit)]"
+                />
+              )}
+              {(fields.Subtitle?.value || isEditing) && (
+                <ContentSdkRichText
+                  field={fields.Subtitle}
+                  className="mx-auto max-w-2xl text-lg opacity-90"
+                />
+              )}
+              <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+                <PrimaryButton field={fields.PrimaryLink} isEditing={isEditing} />
+                <SecondaryButton field={fields.SecondaryLink} isEditing={isEditing} />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </section>
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { JSX, useState, useCallback, useEffect } from 'react';
+import React, { JSX } from 'react';
 import {
   Field,
   ImageField,
@@ -56,20 +56,26 @@ const SectionHeader = ({
   isEditing?: boolean;
   light?: boolean;
 }) => (
-  <div className="mx-auto mb-12 max-w-3xl text-center">
+  <div className="relative mx-auto mb-12 max-w-3xl text-center">
+    {light && (datasource.description?.jsonValue?.value || isEditing) && (
+      <ContentSdkRichText
+        field={datasource.description?.jsonValue}
+        className="font-[family-name:var(--brand-script-font,cursive)] text-5xl leading-none text-white md:text-6xl"
+      />
+    )}
     {(datasource.title?.jsonValue?.value || isEditing) && (
       <Text
         field={datasource.title?.jsonValue}
         tag="h2"
-        className="text-3xl font-bold uppercase tracking-wide sm:text-4xl font-[var(--brand-heading-font,inherit)]"
-        style={{ color: light ? 'var(--brand-primary-foreground, #fff)' : 'var(--brand-fg, #111111)' }}
+        className="text-3xl font-bold uppercase tracking-[0.14em] sm:text-4xl font-[var(--brand-heading-font,inherit)]"
+        style={{ color: light ? 'var(--brand-primary-foreground, #fff)' : 'var(--brand-primary, #09509d)' }}
       />
     )}
-    {(datasource.description?.jsonValue?.value || isEditing) && (
+    {!light && (datasource.description?.jsonValue?.value || isEditing) && (
       <ContentSdkRichText
         field={datasource.description?.jsonValue}
-        className="mt-4 text-lg opacity-70 font-[var(--brand-body-font,inherit)]"
-        style={{ color: 'var(--brand-fg, #111111)' }}
+        className="mt-4 text-lg font-[var(--brand-body-font,inherit)]"
+        style={{ color: 'var(--brand-fg, #333333)' }}
       />
     )}
   </div>
@@ -272,151 +278,97 @@ export const WithImages = ({ fields, params, page }: FeatureCardsGridProps): JSX
   );
 };
 
-/* ────────────────────────────────────────────
-   Carousel — horizontal scrolling cards with dots + arrows
-   ──────────────────────────────────────────── */
+/* The homepage assigns this variant. It renders every factory as an orange icon, matching the KFMB factories band. */
 export const Carousel = ({ fields, params, page }: FeatureCardsGridProps): JSX.Element => {
   const { styles, RenderingIdentifier } = params;
   const isEditing = page?.mode?.isEditing;
   const datasource = fields?.data?.datasource;
   const cards = datasource?.children?.results || [];
 
-  // How many cards visible at once per breakpoint
-  const VISIBLE = { sm: 1, md: 2, lg: 4 };
-  const [pageIndex, setPageIndex] = useState(0);
-  const [visibleCount, setVisibleCount] = useState(VISIBLE.lg);
-
-  useEffect(() => {
-    const update = () => {
-      const w = window.innerWidth;
-      setVisibleCount(w < 640 ? VISIBLE.sm : w < 1024 ? VISIBLE.md : VISIBLE.lg);
-    };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, []);
-
-  const totalPages = Math.max(1, Math.ceil(cards.length / visibleCount));
-  const clampedPage = Math.min(pageIndex, totalPages - 1);
-
-  const goTo = useCallback(
-    (idx: number) => setPageIndex(((idx % totalPages) + totalPages) % totalPages),
-    [totalPages]
-  );
-
   if (!datasource) return <FeatureCardsGridDefaultComponent />;
 
   return (
     <div className={cn('component feature-cards-grid', styles)} id={RenderingIdentifier}>
       <section
-        className="w-full px-4 py-16 md:py-24"
-        style={{ backgroundColor: 'var(--brand-primary, #09509d)' }}
+        className="w-full bg-cover bg-center px-4 py-16 md:py-20"
+        style={{
+          backgroundColor: 'var(--brand-primary, #09509d)',
+          backgroundImage:
+            "linear-gradient(rgba(9, 80, 157, 0.82), rgba(9, 80, 157, 0.82)), url('https://aun-kfmb.sitecoresandbox.cloud/api/public/content/98338-section1-img3?v=5373d7a7')",
+        }}
       >
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-6xl">
           <SectionHeader datasource={datasource} isEditing={isEditing} light />
-
-          {/* Carousel track */}
-          <div className="relative">
-            <div className="overflow-hidden">
-              <div
-                className="flex transition-transform duration-500 ease-out motion-reduce:transition-none"
-                style={{ transform: `translateX(-${clampedPage * 100}%)` }}
-              >
-                {cards.map((card) => (
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
+            {cards.map((card) => {
+              const title = card.cardTitle?.jsonValue?.value || '';
+              const body = (
+                <div className="flex flex-col items-center text-center">
                   <div
-                    key={card.id}
-                    className="flex-shrink-0 px-3"
-                    style={{ width: `${100 / visibleCount}%` }}
+                    className="mb-3 flex h-[4.5rem] w-[4.5rem] items-center justify-center overflow-hidden rounded-full"
+                    style={{ backgroundColor: 'var(--brand-accent, #ff8c00)' }}
                   >
-                    <div className="flex h-full flex-col items-center text-center">
-                      <div
-                        className="mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full"
-                        style={{ backgroundColor: 'var(--brand-accent, #ff8c00)' }}
-                      >
-                        {(card.cardImage?.jsonValue?.value?.src || isEditing) && (
-                          <ContentSdkImage
-                            field={card.cardImage?.jsonValue}
-                            className="h-10 w-10 object-contain"
-                          />
-                        )}
-                      </div>
-                      {(card.cardTitle?.jsonValue?.value || isEditing) && (
-                        <Text
-                          field={card.cardTitle?.jsonValue}
-                          tag="h3"
-                          className="text-sm font-bold uppercase tracking-wide font-[var(--brand-heading-font,inherit)]"
-                          style={{ color: 'var(--brand-primary-foreground, #fff)' }}
-                        />
-                      )}
-                      {(card.cardLink?.jsonValue?.value?.href || isEditing) && (
-                        <ContentSdkLink
-                          field={card.cardLink?.jsonValue}
-                          className="mt-3 text-xs font-semibold uppercase tracking-wide"
-                          style={{ color: 'var(--brand-accent, #ff8c00)' }}
-                        />
-                      )}
-                    </div>
+                    {(card.cardImage?.jsonValue?.value?.src || isEditing) ? (
+                      <ContentSdkImage field={card.cardImage?.jsonValue} className="h-10 w-10 object-contain" />
+                    ) : (
+                      <FactoryMark title={title} />
+                    )}
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Prev / Next arrows */}
-            {totalPages > 1 && !isEditing && (
-              <>
-                <button
-                  type="button"
-                  onClick={() => goTo(clampedPage - 1)}
-                  className="absolute -left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-md transition hover:bg-white"
-                  style={{ color: 'var(--brand-fg, #111)' }}
-                  aria-label="Previous cards"
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polyline points="15 6 9 12 15 18" />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => goTo(clampedPage + 1)}
-                  className="absolute -right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-md transition hover:bg-white"
-                  style={{ color: 'var(--brand-fg, #111)' }}
-                  aria-label="Next cards"
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polyline points="9 6 15 12 9 18" />
-                  </svg>
-                </button>
-              </>
-            )}
-          </div>
-
-          {/* Dot indicators */}
-          {totalPages > 1 && (
-            <div className="mt-6 flex justify-start gap-2">
-              {Array.from({ length: totalPages }).map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => goTo(i)}
-                  className={cn(
-                    'h-2.5 w-2.5 rounded-full transition-all',
-                    i === clampedPage
-                      ? 'scale-110'
-                      : 'opacity-40 hover:opacity-70'
+                  {(title || isEditing) && (
+                    <Text
+                      field={card.cardTitle?.jsonValue}
+                      tag="h3"
+                      className="max-w-[9rem] text-sm font-bold uppercase leading-tight tracking-wide font-[var(--brand-heading-font,inherit)]"
+                      style={{ color: 'var(--brand-primary-foreground, #fff)' }}
+                    />
                   )}
-                  style={{
-                    backgroundColor:
-                      i === clampedPage
-                        ? 'var(--brand-accent, #ff8c00)'
-                        : 'var(--brand-primary-foreground, #fff)',
-                  }}
-                  aria-label={`Go to page ${i + 1}`}
-                />
-              ))}
-            </div>
-          )}
+                </div>
+              );
+              return (
+                <li key={card.id} className="relative">
+                  {body}
+                  {(card.cardLink?.jsonValue || isEditing) && (
+                    <ContentSdkLink
+                      field={card.cardLink?.jsonValue}
+                      className={
+                        isEditing
+                          ? 'mt-2 block text-center text-xs text-white underline'
+                          : 'absolute inset-0 z-10 text-[0px]'
+                      }
+                    />
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </section>
     </div>
   );
 };
+
+function FactoryMark({ title }: { title: string }): JSX.Element {
+  const name = title.toLowerCase();
+  const path = name.includes('mill')
+    ? 'M4 20h16M6 20V10l6-6 6 6v10'
+    : name.includes('macaroni') || name.includes('pasta')
+      ? 'M8 4c2 4 2 12 0 16M12 4c2 4 2 12 0 16M16 4c2 4 2 12 0 16'
+      : name.includes('biscuit')
+        ? 'M12 3l2 4 4 .5-3 3 .8 4.5L12 13l-3.8 2 0.8-4.5-3-3L10 7z'
+        : name.includes('oil')
+          ? 'M10 3h4l-1 6h3l-6 12 1-7H8z'
+          : name.includes('coffee')
+            ? 'M6 8h10v5a5 5 0 0 1-5 5H9a4 4 0 0 1-4-4V8zm10 2h2a2 2 0 0 1 0 4h-2'
+            : name.includes('feed') || name.includes('animal')
+              ? 'M4 16c2-6 14-6 16 0M8 16v3M16 16v3M9 10c1 2 5 2 6 0'
+              : name.includes('sandwich')
+                ? 'M4 9c4-4 12-4 16 0v2H4V9zm0 4h16v2c-4 3-12 3-16 0v-2z'
+                : name.includes('gluten')
+                  ? 'M12 3v18M12 8c3-1 5-1 6 1M12 12c3 1 5 1 6-1M12 8c-3-1-5-1-6 1M12 12c-3 1-5 1-6-1'
+                  : 'M12 3l8 5v8l-8 5-8-5V8z';
+  return (
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d={path} />
+    </svg>
+  );
+}

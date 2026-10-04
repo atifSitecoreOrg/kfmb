@@ -36,20 +36,20 @@ export const Default = ({ fields, params, page }: ImageGalleryProps): JSX.Elemen
 
   return (
     <div className={cn('component image-gallery', styles)} id={RenderingIdentifier}>
-      <figure className="w-full">
+      <figure className="w-full px-4 py-12" style={{ backgroundColor: 'var(--brand-muted, #f4efe4)' }}>
+        <figcaption className="mx-auto mb-8 max-w-3xl text-center">
+          {(fields.AltText?.value || isEditing) && (
+            <Text field={fields.AltText} tag="p" className="text-base font-[var(--brand-body-font,inherit)]" style={{ color: 'var(--brand-fg, #333)' }} />
+          )}
+          {(fields.Caption?.value || isEditing) && (
+            <Text field={fields.Caption} tag="p" className="mt-3 text-3xl font-bold tracking-wide" style={{ color: 'var(--brand-primary, #09509d)' }} />
+          )}
+        </figcaption>
         {(fields.GalleryImage?.value?.src || isEditing) && (
           <ContentSdkImage
             field={fields.GalleryImage}
-            className="w-full max-h-[70vh] object-cover"
+            className="mx-auto w-full max-w-5xl object-cover"
           />
-        )}
-        {(fields.Caption?.value || isEditing) && (
-          <figcaption
-            className="px-4 py-3 text-center text-sm font-[var(--brand-body-font,inherit)]"
-            style={{ color: 'var(--brand-muted-foreground, #6b7280)' }}
-          >
-            <Text field={fields.Caption} />
-          </figcaption>
         )}
       </figure>
     </div>

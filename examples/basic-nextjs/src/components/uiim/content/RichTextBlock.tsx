@@ -72,15 +72,15 @@ export const Centered = ({ fields, params, page }: RichTextBlockProps): JSX.Elem
     <div className={cn('component rich-text-block', styles)} id={RenderingIdentifier}>
       <section
         className="w-full px-4 py-12 md:py-16"
-        style={{ backgroundColor: 'var(--brand-bg, #ffffff)' }}
+        style={{ backgroundColor: 'var(--brand-muted, #f4efe4)' }}
       >
         <div className="mx-auto max-w-3xl text-center">
           {(fields.Title?.value || isEditing) && (
             <Text
               field={fields.Title}
               tag="h2"
-              className="mb-6 text-2xl font-bold md:text-3xl font-[var(--brand-heading-font,inherit)]"
-              style={{ color: 'var(--brand-fg, #111111)' }}
+              className="mb-6 text-3xl font-bold uppercase tracking-[0.12em] md:text-4xl font-[var(--brand-heading-font,inherit)]"
+              style={{ color: 'var(--brand-primary, #09509d)' }}
             />
           )}
           {(fields.Body?.value || isEditing) && (

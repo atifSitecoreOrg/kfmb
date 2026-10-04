@@ -245,7 +245,7 @@ export const Default = ({ fields, params, page, rendering }: NavigationHeaderPro
         className="w-full border-b"
         style={{
           backgroundColor: 'var(--brand-header-bg, #ffffff)',
-          borderColor: 'var(--brand-border, #e5e7eb)',
+          borderColor: '#e6e6e6',
         }}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">

@@ -122,25 +122,38 @@ export const Centered = ({ fields, params, page }: FeatureHighlightProps): JSX.E
         className="w-full px-4 py-16 md:py-24"
         style={{ backgroundColor: 'var(--brand-muted, #f4efe4)' }}
       >
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-3xl">
           <div className="text-center">
-            <Eyebrow field={fields.EyebrowText} isEditing={isEditing} />
+            {(fields.EyebrowText?.value || isEditing) && (
+              <Text
+                field={fields.EyebrowText}
+                tag="p"
+                className="font-[family-name:var(--brand-script-font,cursive)] text-5xl leading-none md:text-6xl"
+                style={{ color: 'var(--brand-accent, #ff8c00)' }}
+              />
+            )}
             {(fields.Title?.value || isEditing) && (
               <Text
                 field={fields.Title}
                 tag="h2"
-                className="text-3xl font-bold tracking-tight sm:text-4xl font-[var(--brand-heading-font,inherit)]"
-                style={{ color: 'var(--brand-fg, #111111)' }}
+                className="mt-2 text-3xl font-bold uppercase tracking-[0.16em] sm:text-4xl font-[var(--brand-heading-font,inherit)]"
+                style={{ color: 'var(--brand-primary, #09509d)' }}
               />
             )}
             {(fields.Description?.value || isEditing) && (
               <ContentSdkRichText
                 field={fields.Description}
-                className="mx-auto mt-4 max-w-2xl text-base opacity-70 font-[var(--brand-body-font,inherit)]"
-                style={{ color: 'var(--brand-fg, #111111)' }}
+                className="mx-auto mt-6 max-w-2xl text-base leading-7 font-[var(--brand-body-font,inherit)]"
+                style={{ color: 'var(--brand-fg, #333333)' }}
               />
             )}
-            <CtaButton field={fields.PrimaryLink} isEditing={isEditing} />
+            {(fields.PrimaryLink?.value?.href || isEditing) && (
+              <ContentSdkLink
+                field={fields.PrimaryLink}
+                className="mt-8 inline-flex items-center justify-center px-8 py-2.5 text-sm font-semibold text-white transition-transform duration-150 ease-out active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100 rounded-[var(--brand-button-radius,9999px)]"
+                style={{ backgroundColor: 'var(--brand-accent, #ff8c00)' }}
+              />
+            )}
           </div>
           {(fields.FeatureImage?.value?.src || isEditing) && (
             <div className="relative mt-10 aspect-video overflow-hidden rounded-[var(--brand-card-radius,0.75rem)]">
