@@ -223,3 +223,29 @@ export const Wide = ({ params, page }: ComponentProps): JSX.Element => {
     </div>
   );
 };
+
+/* Kfmb variant — narrow cream column for news and stories */
+export const Kfmb = ({ params, page }: ComponentProps): JSX.Element => {
+  const { styles, RenderingIdentifier } = params;
+  const isEditing = page?.mode?.isEditing;
+  const routeFields = getRouteFields(page);
+  if (!routeFields) return <ArticleBodyDefaultComponent />;
+  const { ArticleContent, ArticleKeyTakeaways } = routeFields;
+
+  return (
+    <div className={cn('component article-body', styles)} id={RenderingIdentifier}>
+      <article className="px-4 py-12" style={{ backgroundColor: 'var(--brand-bg)' }}>
+        <div className="mx-auto max-w-3xl">
+          <KeyTakeaways field={ArticleKeyTakeaways} isEditing={isEditing} />
+          {(ArticleContent?.value || isEditing) && (
+            <ContentSdkRichText
+              field={ArticleContent}
+              className="prose prose-lg max-w-none"
+              style={{ fontFamily: 'var(--brand-body-font)', color: 'var(--brand-fg)' }}
+            />
+          )}
+        </div>
+      </article>
+    </div>
+  );
+};

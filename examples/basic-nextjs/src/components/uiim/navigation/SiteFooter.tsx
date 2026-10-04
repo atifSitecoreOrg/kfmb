@@ -6,6 +6,7 @@ import {
 import Link from 'next/link';
 import { ComponentProps } from 'lib/component-props';
 import { cn } from '@/lib/utils';
+import { KfmbSocialRow } from '@/components/uiim/kfmb/chrome';
 
 type SiteFooterProps = ComponentProps & {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -330,6 +331,45 @@ export const MegaFooter = (props: SiteFooterProps): JSX.Element => {
               <a href="#" className="hover:opacity-100 transition-opacity">Cookie Settings</a>
             </div>
           </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+/* Kfmb variant — navy footer, logo, social row, orange powered-by bar */
+export const Kfmb = (props: SiteFooterProps): JSX.Element => {
+  const { params } = props;
+  const { styles, RenderingIdentifier } = params;
+  if (!params) return <SiteFooterDefaultComponent />;
+  const brandLogo = getBrandLogo(props);
+
+  return (
+    <div className={cn('component site-footer', styles)} id={RenderingIdentifier}>
+      <footer style={{ backgroundColor: 'var(--brand-footer-bg)', color: 'var(--brand-footer-fg)' }}>
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.2fr_1fr]">
+          <div className="space-y-4">
+            <Logo brandLogo={brandLogo} />
+            <p className="max-w-xs text-sm leading-6 opacity-80" style={{ fontFamily: 'var(--brand-body-font)' }}>
+              Kuwait Flour Mills &amp; Bakeries Company
+            </p>
+            <p className="text-xs opacity-70">© KFMBC. All Rights Reserved</p>
+          </div>
+          <div>
+            <h2
+              className="text-sm font-bold uppercase tracking-[0.18em]"
+              style={{ fontFamily: 'var(--brand-heading-font)' }}
+            >
+              Social media
+            </h2>
+            <KfmbSocialRow className="mt-4" />
+          </div>
+        </div>
+        <div
+          className="px-4 py-3 text-center text-xs font-semibold tracking-wide"
+          style={{ backgroundColor: 'var(--brand-accent)', color: 'var(--brand-accent-foreground)' }}
+        >
+          Powered by MAK United
         </div>
       </footer>
     </div>

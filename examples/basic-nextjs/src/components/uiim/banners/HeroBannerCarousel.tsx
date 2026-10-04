@@ -318,3 +318,57 @@ export const WithThumbnails = ({ fields, params, page }: HeroBannerCarouselProps
     </div>
   );
 };
+
+/* Kfmb variant — edge-to-edge photograph, no headline overlay, thumbnail strip */
+export const Kfmb = ({ fields, params, page }: HeroBannerCarouselProps): JSX.Element => {
+  const { styles, RenderingIdentifier } = params;
+  const isEditing = page?.mode?.isEditing;
+  const datasource = fields?.data?.datasource;
+  const slides = datasource?.children?.results || [];
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  if (!datasource || slides.length === 0) return <HeroBannerCarouselDefaultComponent />;
+  const slide = slides[Math.min(activeIndex, slides.length - 1)];
+
+  return (
+    <div className={cn('component hero-banner-carousel', styles)} id={RenderingIdentifier}>
+      <section className="w-full" aria-label={datasource.title?.jsonValue?.value || 'Homepage highlights'}>
+        <div className="relative min-h-[22rem] w-full md:min-h-[32rem]">
+          {(slide.slideImage?.jsonValue?.value?.src || isEditing) && (
+            <SmartMedia field={slide.slideImage.jsonValue} fill sizes="100vw" className="object-cover" />
+          )}
+          {(slide.slideTitle?.jsonValue?.value || isEditing) && (
+            <div className="absolute inset-x-0 bottom-8 text-center">
+              <Text
+                field={slide.slideTitle.jsonValue}
+                tag="h2"
+                className="text-3xl font-bold uppercase tracking-[0.14em] text-white drop-shadow"
+                style={{ fontFamily: 'var(--brand-heading-font)' }}
+              />
+            </div>
+          )}
+        </div>
+        {slides.length > 1 && (
+          <div className="flex justify-center gap-2 bg-white px-4 py-3">
+            {slides.map((item, index) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                className={cn(
+                  'h-14 w-20 overflow-hidden border-2',
+                  index === activeIndex ? 'border-[var(--brand-accent)]' : 'border-transparent opacity-70'
+                )}
+                aria-label={`Show slide ${index + 1}`}
+              >
+                {item.slideImage?.jsonValue?.value?.src && (
+                  <ContentSdkImage field={item.slideImage.jsonValue} className="h-full w-full object-cover" />
+                )}
+              </button>
+            ))}
+          </div>
+        )}
+      </section>
+    </div>
+  );
+};

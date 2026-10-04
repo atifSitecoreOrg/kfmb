@@ -1,103 +1,129 @@
-# Client Brand Theme
-# Generated from https://www.kuwaitflourmills.com/Home
+# Client Brand Theme — Kuwait Flour Mills & Bakeries
+# Visual source: full-page homepage screenshot of https://www.kuwaitflourmills.com/Home
+# Hex values are averages sampled from that screenshot. The live site could not be
+# rendered locally (DNS did not resolve), so computed CSS was not available.
 
 client:
-  name: "Kuwait Flour Mills & Bakeries"
+  name: "Kuwait Flour Mills"
   sourceUrl: "https://www.kuwaitflourmills.com/Home"
-  extractedAt: "2026-10-04"
-  extractedBy: "playwright-scraper"
+  extractedAt: "2026-10-04T19:20:00Z"
+  extractedBy: "cursor"
 
 colors:
-  primary: "#09509D"
-  primaryForeground: "#FFFFFF"
-  secondary: "#FF8C00"
-  secondaryForeground: "#FFFFFF"
-  accent: "#FF8C00"
-  accentForeground: "#FFFFFF"
-  background: "#FFFFFF"
-  foreground: "#333333"
-  muted: "#F4EFE4"
-  mutedForeground: "#333333"
-  headerBackground: "#FFFFFF"
-  headerForeground: "#09509D"
-  footerBackground: "#09509D"
-  footerForeground: "#FFFFFF"
-  border: "#FF8C00"
-  ring: "#09509D"
+  primary: "#1E5B9E"
+  primaryForeground: "#ffffff"
+  secondary: "#0C519B"
+  secondaryForeground: "#ffffff"
+  accent: "#F88D0B"
+  accentForeground: "#ffffff"
+  background: "#FBF6EE"
+  foreground: "#243140"
+  muted: "#F7EDDB"
+  mutedForeground: "#5C6570"
+  headerBackground: "#ffffff"
+  headerForeground: "#1E5B9E"
+  footerBackground: "#0C519B"
+  footerForeground: "#ffffff"
+  border: "#E6D8C4"
+  ring: "#F88D0B"
   extra:
-    - name: "cream"
-      value: "#F4EFE4"
-      usage: "Welcome and news bands. Sampled from the screenshot; computed CSS did not expose this token."
+    - { name: "factoryBlue", value: "#1E5B9E" }
+    - { name: "footerBar", value: "#F88D0B" }
+    - { name: "creamSection", value: "#F7EDDB" }
+    - { name: "scriptWatermark", value: "#F3D7A2" }
 
 typography:
-  headingFamily: "Raleway"
+  headingFamily: "'Raleway', sans-serif"
   headingWeight: "700"
-  bodyFamily: "Raleway"
+  bodyFamily: "'Raleway', sans-serif"
   bodyWeight: "400"
-  monoFamily: ""
-  googleFontsUrl: "https://fonts.googleapis.com/css?family=El+Messiri|Raleway:300,400,700"
+  monoFamily: "'Raleway', sans-serif"
+  scriptFamily: "'Great Vibes', cursive"
+  googleFontsUrl: "https://fonts.googleapis.com/css2?family=Great+Vibes&family=Raleway:wght@400;500;600;700&display=swap"
   scale:
-    hero: "85px"
-    h1: "39px"
-    h2: "32px"
-    h3: "24px"
-    body: "14px"
-    small: "12px"
+    hero: "2.75rem"
+    h1: "2.25rem"
+    h2: "1.75rem"
+    h3: "1.125rem"
+    body: "1rem"
+    small: "0.875rem"
   headingTransform: "uppercase"
-  letterSpacing: "0.06em"
-  lineHeight: "1.5"
+  letterSpacing: "0.04em"
+  lineHeight: "relaxed"
 
 spacing:
-  density: "comfortable"
+  density: "normal"
   sectionGap: "0"
-  containerMaxWidth: "1200px"
-  containerPadding: "24px"
+  containerMaxWidth: "1140px"
+  containerPadding: "1.5rem"
 
 shape:
-  borderRadius: "0px"
-  buttonRadius: "100px"
-  cardRadius: "0px"
-  imageRadius: "0px"
+  borderRadius: "9999px"
+  buttonRadius: "9999px"
+  cardRadius: "0"
+  imageRadius: "0"
   shadowStyle: "none"
-  borderStyle: "orange frame on news photos"
+  borderStyle: "none"
 
 tone:
-  overall: "National industrial brand. Blue and orange on cream, with large photography of Kuwait and food."
-  colorMode: "light"
+  overall: "corporate"
+  colorMode: "mixed"
   contrast: "high"
-  imagery: "Full-bleed landscape photography, product stills, and circular orange category icons."
+  imagery: "photography"
   heroStyle: "full-bleed-image"
-  cardStyle: "bordered"
+  cardStyle: "flat"
   navStyle: "solid-bar"
 
 tailwind:
   colors:
     brand:
-      primary: "#09509D"
-      secondary: "#FF8C00"
-      accent: "#FF8C00"
+      primary: "#1E5B9E"
+      secondary: "#0C519B"
+      accent: "#F88D0B"
   fontFamily:
     heading: ["Raleway", "sans-serif"]
-    body: ["Raleway", "El Messiri", "sans-serif"]
+    body: ["Raleway", "sans-serif"]
   borderRadius:
-    DEFAULT: "0px"
+    DEFAULT: "9999px"
     button: "9999px"
-    card: "0px"
+    card: "0"
 
 cssVariables: |
-  --background: #ffffff;
-  --foreground: #333333;
-  --primary: #09509d;
-  --primary-foreground: #ffffff;
-  --secondary: #ff8c00;
-  --accent: #ff8c00;
-  --muted: #f4efe4;
-  --card: #ffffff;
+  :root {
+    --brand-primary: #1e5b9e;
+    --brand-primary-foreground: #ffffff;
+    --brand-secondary: #0c519b;
+    --brand-secondary-foreground: #ffffff;
+    --brand-accent: #f88d0b;
+    --brand-accent-foreground: #ffffff;
+    --brand-highlight: #f5c451;
+    --brand-dark: #0c519b;
+    --brand-dark-foreground: #ffffff;
+    --brand-bg: #fbf6ee;
+    --brand-fg: #243140;
+    --brand-muted: #f7eddb;
+    --brand-muted-foreground: #5c6570;
+    --brand-border: #e6d8c4;
+    --brand-ring: #f88d0b;
+    --brand-header-bg: #ffffff;
+    --brand-header-fg: #1e5b9e;
+    --brand-footer-bg: #0c519b;
+    --brand-footer-fg: #ffffff;
+    --brand-heading-font: "Raleway", sans-serif;
+    --brand-body-font: "Raleway", sans-serif;
+    --brand-script-font: "Great Vibes", cursive;
+    --brand-radius: 9999px;
+    --brand-button-radius: 9999px;
+    --brand-card-radius: 0px;
+  }
 
 extraction:
-  confidence: "high"
-  method: "playwright-scraper-plus-screenshot"
+  confidence: "medium"
+  method: "screenshot-analysis"
   notes:
-    - "Computed CSS: link and footer blue rgb(9, 80, 157), button rgb(255, 140, 0), body rgb(51, 51, 51)."
-    - "Headings are Raleway 700 uppercase. El Messiri is present for Arabic and is not applied on the English homepage."
-    - "The circular logo sits on the boundary between the white header and the bridge photograph."
+    - "Playwright scraper failed with ERR_NAME_NOT_RESOLVED for www.kuwaitflourmills.com. Theme is sampled from the supplied full-page screenshot."
+    - "Orange #F88D0B is the average of saturated button and icon pixels. Blue #1E5B9E is the factories overlay. Footer navy #0C519B and cream #F7EDDB come from the same sample."
+    - "Trademark colors are orange, blue, and white. Exact brand-guidelines hex codes were not published."
+    - "Section titles are uppercase sans-serif. Faint script words (Welcome, Products, Releases, News & Events) are decorative; Great Vibes is the Google Fonts stand-in."
+    - "Buttons are pills. Factory items are circular orange icons on a blue-tinted photograph, not raised cards."
+    - "The supplied screenshot starts at the bridge hero, so the header colors are inferred as a white solid bar with dark text."

@@ -44,3 +44,43 @@ export const Default = async ({ params, rendering, page, fields }: ListingProps)
     </section>
   );
 };
+
+export const Kfmb = async ({ params, rendering, page, fields }: ListingProps): Promise<JSX.Element> => {
+  const language =
+    (page?.layout?.sitecore?.context as { language?: string } | undefined)?.language || 'en';
+  const stories = await loadChildStories(fields?.SourcePath?.value || EVENTS_PATH, language);
+  const isEditing = page?.mode?.isEditing;
+  return (
+    <section
+      className={`component px-4 py-16 ${params.styles ?? ''}`}
+      style={{ backgroundColor: 'var(--brand-bg)' }}
+      id={params.RenderingIdentifier || rendering.uid}
+    >
+      <div className="mx-auto max-w-4xl text-center">
+        <p className="font-[family-name:var(--brand-script-font,cursive)] text-6xl leading-none" style={{ color: 'var(--brand-highlight)' }}>
+          Events
+        </p>
+        {fields?.Heading && (fields.Heading.value || isEditing) && (
+          <Text
+            tag="h1"
+            field={fields.Heading}
+            className="-mt-2 text-3xl font-bold uppercase tracking-[0.14em]"
+            style={{ color: 'var(--brand-primary)', fontFamily: 'var(--brand-heading-font)' }}
+          />
+        )}
+        <ul className="mt-10 space-y-4 text-left">
+          {stories.map((story) => (
+            <li key={story.id}>
+              <a href={story.href} className="block border bg-white px-6 py-5" style={{ borderColor: 'var(--brand-border)' }}>
+                {story.date && <p className="text-xs font-bold uppercase tracking-[0.14em]" style={{ color: 'var(--brand-accent)' }}>{story.date}</p>}
+                <h2 className="mt-2 text-xl font-bold uppercase tracking-wide" style={{ color: 'var(--brand-primary)', fontFamily: 'var(--brand-heading-font)' }}>{story.title}</h2>
+                {story.location && <p className="mt-2 text-sm" style={{ color: 'var(--brand-muted-foreground)' }}>{story.location}</p>}
+                {story.summary && <p className="mt-3 text-sm leading-6" style={{ color: 'var(--brand-fg)' }}>{story.summary}</p>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+};

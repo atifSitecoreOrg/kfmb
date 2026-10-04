@@ -5,3 +5,7 @@ import { CatalogListing } from '@/lib/content-hub/views';
 export const Default = (props: ComponentProps): JSX.Element => (
   <CatalogListing {...props} kind="product" componentName="ProductListing" />
 );
+
+export const Kfmb = (props: ComponentProps): JSX.Element => (
+  <CatalogListing {...props} kind="product" componentName="ProductListing" appearance="kfmb" />
+);

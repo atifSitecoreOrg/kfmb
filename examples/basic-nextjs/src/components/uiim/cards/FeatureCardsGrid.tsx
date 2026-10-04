@@ -12,6 +12,7 @@ import {
 } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { cn } from '@/lib/utils';
+import { kfmbPill } from '@/components/uiim/kfmb/chrome';
 
 interface FeatureCardItemFields {
   id: string;
@@ -341,6 +342,74 @@ export const Carousel = ({ fields, params, page }: FeatureCardsGridProps): JSX.E
               );
             })}
           </ul>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+/* Kfmb variant — cream news band, script watermark, three photographs, one pill */
+export const Kfmb = ({ fields, params, page }: FeatureCardsGridProps): JSX.Element => {
+  const { styles, RenderingIdentifier } = params;
+  const isEditing = page?.mode?.isEditing;
+  const datasource = fields?.data?.datasource;
+  const cards = datasource?.children?.results || [];
+  if (!datasource) return <FeatureCardsGridDefaultComponent />;
+
+  return (
+    <div className={cn('component feature-cards-grid', styles)} id={RenderingIdentifier}>
+      <section className="w-full px-4 py-16 text-center md:py-20" style={{ backgroundColor: 'var(--brand-muted)' }}>
+        <div className="mx-auto max-w-6xl">
+          {(datasource.description?.jsonValue?.value || isEditing) ? (
+            <ContentSdkRichText
+              field={datasource.description.jsonValue}
+              className="font-[family-name:var(--brand-script-font,cursive)] text-5xl leading-none md:text-7xl"
+              style={{ color: 'var(--brand-highlight)' }}
+            />
+          ) : (
+            <p aria-hidden className="font-[family-name:var(--brand-script-font,cursive)] text-5xl leading-none md:text-7xl" style={{ color: 'var(--brand-highlight)' }}>
+              News &amp; Events
+            </p>
+          )}
+          {(datasource.title?.jsonValue?.value || isEditing) && (
+            <Text
+              field={datasource.title.jsonValue}
+              tag="h2"
+              className="-mt-3 text-3xl font-bold uppercase tracking-[0.16em] sm:text-4xl"
+              style={{ color: 'var(--brand-primary)', fontFamily: 'var(--brand-heading-font)' }}
+            />
+          )}
+          <ul className="mt-10 grid gap-4 md:grid-cols-3">
+            {cards.map((card) => (
+              <li key={card.id} className="relative overflow-hidden bg-white">
+                {(card.cardImage?.jsonValue?.value?.src || isEditing) && (
+                  <ContentSdkImage field={card.cardImage.jsonValue} className="aspect-[16/10] w-full object-cover" />
+                )}
+                {(card.cardTitle?.jsonValue?.value || isEditing) && (
+                  <Text
+                    field={card.cardTitle.jsonValue}
+                    tag="h3"
+                    className="px-3 py-3 text-sm font-bold uppercase tracking-wide"
+                    style={{ color: 'var(--brand-primary)', fontFamily: 'var(--brand-heading-font)' }}
+                  />
+                )}
+                {(card.cardLink?.jsonValue?.value?.href || isEditing) && (
+                  <ContentSdkLink
+                    field={card.cardLink.jsonValue}
+                    className={isEditing ? 'block px-3 pb-3 text-xs underline' : 'absolute inset-0'}
+                    aria-label={card.cardTitle?.jsonValue?.value || 'News story'}
+                  />
+                )}
+              </li>
+            ))}
+          </ul>
+          <a
+            href="/Home/media-center/news"
+            className={cn(kfmbPill, 'mt-10')}
+            style={{ backgroundColor: 'var(--brand-accent)' }}
+          >
+            Read More
+          </a>
         </div>
       </section>
     </div>

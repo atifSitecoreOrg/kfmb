@@ -10,9 +10,12 @@ import {
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import React from 'react';
 import * as React_7214d18997ee864dd178de7b3a8430f6783e8b89 from 'react';
-import { NextImage, RichText, Text, Link, AppPlaceholder } from '@sitecore-content-sdk/nextjs';
+import { NextImage, RichText, Text, Link, DateField, AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 import { cn } from '@/lib/utils';
+import { KfmbSocialRow } from '@/components/uiim/kfmb/chrome';
+import { CatalogListing, CatalogDetail, RelatedRail } from '@/lib/content-hub/views';
 import Link_a258c208ba01265ca0aa9c7abae745cc7141aa63 from 'next/link';
+import { loadChildStories } from '@/lib/media-center/children';
 import { Sparkles } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 import { SmartMedia } from '@/components/uiim/media/SmartMedia';
@@ -44,6 +47,7 @@ const importMap = [
       { name: 'RichText', value: RichText },
       { name: 'Text', value: Text },
       { name: 'Link', value: Link },
+      { name: 'DateField', value: DateField },
       { name: 'AppPlaceholder', value: AppPlaceholder },
     ]
   },
@@ -54,9 +58,29 @@ const importMap = [
     ]
   },
   {
+    module: '@/components/uiim/kfmb/chrome',
+    exports: [
+      { name: 'KfmbSocialRow', value: KfmbSocialRow },
+    ]
+  },
+  {
+    module: '@/lib/content-hub/views',
+    exports: [
+      { name: 'CatalogListing', value: CatalogListing },
+      { name: 'CatalogDetail', value: CatalogDetail },
+      { name: 'RelatedRail', value: RelatedRail },
+    ]
+  },
+  {
     module: 'next/link',
     exports: [
       { name: 'default', value: Link_a258c208ba01265ca0aa9c7abae745cc7141aa63 },
+    ]
+  },
+  {
+    module: '@/lib/media-center/children',
+    exports: [
+      { name: 'loadChildStories', value: loadChildStories },
     ]
   },
   {

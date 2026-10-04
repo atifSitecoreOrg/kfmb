@@ -5,3 +5,7 @@ import { RelatedRail } from '@/lib/content-hub/views';
 export const Default = (props: ComponentProps): JSX.Element | null => (
   <RelatedRail {...props} kind="product" componentName="ProductRecommendations" segment="products" mode="recommended" />
 );
+
+export const Kfmb = (props: ComponentProps): JSX.Element | null => (
+  <RelatedRail {...props} kind="product" componentName="ProductRecommendations" segment="products" mode="recommended" appearance="kfmb" />
+);

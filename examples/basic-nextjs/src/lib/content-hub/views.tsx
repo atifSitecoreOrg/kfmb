@@ -42,15 +42,20 @@ export async function CatalogListing({
   page,
   fields,
   rendering,
-}: CatalogProps & { kind: CatalogKind; componentName: string }): Promise<JSX.Element> {
+  appearance = 'default',
+}: CatalogProps & { kind: CatalogKind; componentName: string; appearance?: 'default' | 'kfmb' }): Promise<JSX.Element> {
   const isEditing = page?.mode?.isEditing;
   try {
     const result = await searchCatalog(kind, '', 12);
     const cards = result.ok ? result.data ?? [] : [];
     return (
-      <section className={`component bg-background px-4 py-16 text-foreground ${params?.styles ?? ''}`} id={sectionId(params, rendering)}>
+      <section
+        className={`component px-4 py-16 text-foreground ${appearance === 'kfmb' ? '' : 'bg-background'} ${params?.styles ?? ''}`}
+        style={appearance === 'kfmb' ? { backgroundColor: 'var(--brand-muted)' } : undefined}
+        id={sectionId(params, rendering)}
+      >
         <div className="mx-auto max-w-6xl">
-          <CatalogHeading eyebrow={EYEBROW[kind]} heading={fields?.Heading} introduction={fields?.Introduction} isEditing={isEditing} />
+          <CatalogHeading eyebrow={EYEBROW[kind]} heading={fields?.Heading} introduction={fields?.Introduction} isEditing={isEditing} appearance={appearance} />
           {!result.ok && (
             <CatalogState
               name={componentName}
@@ -60,7 +65,7 @@ export async function CatalogListing({
           {result.ok && cards.length === 0 && (
             <CatalogState name={componentName} message={`No ${NOUN[kind]} are published yet.`} />
           )}
-          {cards.length > 0 && <CardGrid cards={cards} />}
+          {cards.length > 0 && <CardGrid cards={cards} appearance={appearance} />}
         </div>
       </section>
     );
@@ -78,7 +83,8 @@ export async function CatalogDetail({
   page,
   fields,
   rendering,
-}: CatalogProps & { kind: CatalogKind; componentName: string; segment: string }): Promise<JSX.Element> {
+  appearance = 'default',
+}: CatalogProps & { kind: CatalogKind; componentName: string; segment: string; appearance?: 'default' | 'kfmb' }): Promise<JSX.Element> {
   const isEditing = page?.mode?.isEditing;
   try {
     const context = page?.layout?.sitecore?.context as Record<string, unknown> | undefined;
@@ -93,7 +99,11 @@ export async function CatalogDetail({
     }
     const result = await getCatalogDetail(kind, identifier);
     return (
-      <section className={`component bg-background px-4 py-16 text-foreground ${params?.styles ?? ''}`} id={sectionId(params, rendering)}>
+      <section
+        className={`component px-4 py-16 text-foreground ${appearance === 'kfmb' ? '' : 'bg-background'} ${params?.styles ?? ''}`}
+        style={appearance === 'kfmb' ? { backgroundColor: 'var(--brand-bg)' } : undefined}
+        id={sectionId(params, rendering)}
+      >
         <div className="mx-auto max-w-6xl">
           {!result.ok && (
             <CatalogState
@@ -101,7 +111,7 @@ export async function CatalogDetail({
               message={publicMessage(isEditing, result.error, `This ${kind} is not available.`)}
             />
           )}
-          {result.ok && result.data && <DetailView detail={result.data} />}
+          {result.ok && result.data && <DetailView detail={result.data} appearance={appearance} />}
           {result.ok && !result.data && <CatalogState name={componentName} message={`This ${kind} is not available.`} />}
         </div>
       </section>
@@ -121,11 +131,13 @@ export async function RelatedRail({
   page,
   fields,
   rendering,
+  appearance = 'default',
 }: CatalogProps & {
   kind: CatalogKind;
   componentName: string;
   segment: string;
   mode: 'similar' | 'recommended';
+  appearance?: 'default' | 'kfmb';
 }): Promise<JSX.Element | null> {
   const isEditing = page?.mode?.isEditing;
   const emptyMessage = mode === 'similar' ? `No similar ${NOUN[kind]} yet.` : `No recommended ${NOUN[kind]} yet.`;
@@ -143,15 +155,20 @@ export async function RelatedRail({
       );
     }
     return (
-      <section className={`component bg-muted px-4 py-16 text-foreground ${params?.styles ?? ''}`} id={sectionId(params, rendering)}>
+      <section
+        className={`component px-4 py-16 text-foreground ${appearance === 'kfmb' ? '' : 'bg-muted'} ${params?.styles ?? ''}`}
+        style={appearance === 'kfmb' ? { backgroundColor: 'var(--brand-muted)' } : undefined}
+        id={sectionId(params, rendering)}
+      >
         <div className="mx-auto max-w-6xl">
           <CatalogHeading
             eyebrow={mode === 'similar' ? 'Similar' : 'Recommended'}
             heading={fields?.Heading}
             introduction={fields?.Introduction}
             isEditing={isEditing}
+            appearance={appearance}
           />
-          <CardGrid cards={cards} />
+          <CardGrid cards={cards} appearance={appearance} />
         </div>
       </section>
     );

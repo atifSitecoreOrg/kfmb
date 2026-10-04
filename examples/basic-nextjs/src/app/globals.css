@@ -86,26 +86,33 @@
    An unlayered :root block above @layer base ALWAYS wins the cascade.
    =================================================================== */
 
-/* KFMB theme. Unlayered :root wins over the defaults in @layer base. */
+/* KFMB theme. Unlayered :root wins over the defaults in @layer base.
+   Blue is the brand color for headings, header, and footer.
+   Orange is the action color for pills, icons, and the footer bar. */
 :root {
-  --brand-primary: #09509d;
+  --brand-primary: #1e5b9e;
   --brand-primary-foreground: #ffffff;
-  --brand-accent: #ff8c00;
+  --brand-secondary: #0c519b;
+  --brand-secondary-foreground: #ffffff;
+  --brand-accent: #f88d0b;
   --brand-accent-foreground: #ffffff;
-  --brand-dark: #09509d;
+  --brand-highlight: #f5c451;
+  --brand-dark: #0c519b;
   --brand-dark-foreground: #ffffff;
-  --brand-bg: #ffffff;
-  --brand-fg: #333333;
-  --brand-muted: #f4efe4;
-  --brand-muted-foreground: #333333;
-  --brand-border: #ff8c00;
+  --brand-bg: #fbf6ee;
+  --brand-fg: #243140;
+  --brand-muted: #f7eddb;
+  --brand-muted-foreground: #5c6570;
+  --brand-border: #e6d8c4;
+  --brand-ring: #f88d0b;
   --brand-header-bg: #ffffff;
-  --brand-header-fg: #09509d;
-  --brand-footer-bg: #09509d;
+  --brand-header-fg: #1e5b9e;
+  --brand-footer-bg: #0c519b;
   --brand-footer-fg: #ffffff;
   --brand-heading-font: "Raleway", sans-serif;
   --brand-body-font: "Raleway", sans-serif;
   --brand-script-font: "Great Vibes", cursive;
+  --brand-radius: 9999px;
   --brand-button-radius: 9999px;
   --brand-card-radius: 0px;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);

@@ -141,6 +141,7 @@ components:
         - "Default"
         - "Transparent"
         - "Minimal"
+        - "Kfmb"
 
     templates:
       parent:
@@ -219,6 +220,7 @@ components:
         - { name: "Default", itemId: "{150B9AFE-2B9F-48AD-8F01-036666057814}" }
         - { name: "Transparent", itemId: "{A46EFC9D-7CF0-4C92-9577-1D94FD1D9782}" }
         - { name: "Minimal", itemId: "{608E0EC7-E2C6-4093-A1A1-3962FF17885A}" }
+        - { name: "Kfmb", itemId: "{480D40D3-A351-4545-BD29-34DECC5D167E}" }
 
     verification:
       checkedAt: "2026-05-05T16:00:00Z"
@@ -717,6 +719,7 @@ components:
         - "TwoColumn"
         - "FourColumn"
         - "Horizontal"
+        - "Kfmb"
 
     templates:
       datasource:
@@ -798,6 +801,7 @@ components:
         - { name: "TwoColumn", itemId: "{3935D1DD-DC84-4A01-B271-BEF9475C5AE1}" }
         - { name: "FourColumn", itemId: "{5F5B90A2-F88D-4415-B8B1-D9DCDE1A6B5C}" }
         - { name: "Horizontal", itemId: "{EF716EAC-BEBF-484A-8826-D2051F549F2F}" }
+        - { name: "Kfmb", itemId: "{44F8ED71-D68C-45A9-A1B5-D67954D36AFD}" }
 
     verification:
       checkedAt: "2026-03-25T16:30:00Z"
@@ -1077,6 +1081,7 @@ components:
         - "WithImage"
         - "Split"
         - "Minimal"
+        - "Kfmb"
 
     templates:
       datasource:
@@ -1139,6 +1144,7 @@ components:
         - { name: "WithImage", itemId: "{2DC4E1E9-79A0-48C7-A6D9-AC7DD8AFAAA0}" }
         - { name: "Split", itemId: "{9DBA839A-E0F8-47D2-AA8E-29EDA7CC68E6}" }
         - { name: "Minimal", itemId: "{E63EE25F-C889-4FE1-81B7-4611CF5969BE}" }
+        - { name: "Kfmb", itemId: "{3617C613-99C1-4579-8C42-7394FDA64ED8}" }
 
     verification:
       checkedAt: "2026-03-25T18:00:00Z"
@@ -1177,6 +1183,7 @@ components:
         - "TwoColumn"
         - "WithImages"
         - "Carousel"
+        - "Kfmb"
 
     templates:
       datasource:
@@ -1258,6 +1265,7 @@ components:
         - { name: "TwoColumn", itemId: "{0BCA5162-9643-49F3-BEE2-6B5243287D5E}" }
         - { name: "WithImages", itemId: "{0378DF47-C562-4BE1-8BA7-DFE429A2015A}" }
         - { name: "Carousel", itemId: "" }  # TODO: create in Sitecore
+        - { name: "Kfmb", itemId: "{63F73843-BB53-4D76-AA48-55E2B9CB8A78}" }
 
     verification:
       checkedAt: "2026-03-25T18:30:00Z"
@@ -1506,6 +1514,7 @@ components:
         - "Default"
         - "Minimal"
         - "MegaFooter"
+        - "Kfmb"
 
     templates:
       datasource:
@@ -1563,6 +1572,7 @@ components:
         - { name: "Default", itemId: "{143CFE84-1E77-4961-975C-38564DC43DB9}" }
         - { name: "Minimal", itemId: "{AF87D61B-F6A8-4036-9BF8-FDB586268D24}" }
         - { name: "MegaFooter", itemId: "{DA131066-F9A2-47F0-A099-F614E61817AA}" }
+        - { name: "Kfmb", itemId: "{A5AB2A3E-FFFF-4DDA-B01E-AD5D3534C06E}" }
 
     verification:
       checkedAt: "2026-03-25T20:00:00Z"
@@ -1594,6 +1604,7 @@ components:
         - "Default"
         - "Banner"
         - "Compact"
+        - "Kfmb"
 
     templates:
       datasource:
@@ -1655,6 +1666,7 @@ components:
         - { name: "Default", itemId: "{F0F09912-52F5-4429-8CBF-F6FAA8AD2453}" }
         - { name: "Banner", itemId: "{5FE28EAE-3DC9-4DF5-89B8-0576C940BE01}" }
         - { name: "Compact", itemId: "{1B8FF6FD-6E4A-4A9A-903A-5B512672A552}" }
+        - { name: "Kfmb", itemId: "{791B50FC-C1A6-4A81-A68F-D028AF4F437A}" }
 
     verification:
       checkedAt: "2026-03-25T20:30:00Z"
@@ -2054,6 +2066,7 @@ components:
         - "Centered"
         - "WithVideo"
         - "IconLeft"
+        - "Kfmb"
 
     templates:
       datasource:
@@ -2116,6 +2129,7 @@ components:
         - { name: "Centered", itemId: "{3C33C16D-F0D3-4FBF-8D78-CE70CEA0868B}" }
         - { name: "WithVideo", itemId: "{E58A4CB1-BFB4-4FDF-B48D-6254708B05CA}" }
         - { name: "IconLeft", itemId: "{E39E52FE-885D-433B-A2D3-B20F66E8F767}" }
+        - { name: "Kfmb", itemId: "{BE8503A6-55F9-4783-B386-6F8FE96E1CA0}" }
 
     verification:
       checkedAt: "2026-03-25T22:00:00Z"
@@ -2147,6 +2161,7 @@ components:
       variants:
         - "Default"
         - "WithThumbnails"
+        - "Kfmb"
 
     templates:
       parent:
@@ -2250,6 +2265,7 @@ components:
         - "Default"
         - "Minimal"
         - "SplitImage"
+        - "Kfmb"
 
     templates:
       renderingParams:
@@ -2286,6 +2302,7 @@ components:
         - { name: "Default", itemId: "{71d4165d-543e-4b4f-8c88-da9d8d395163}" }
         - { name: "Minimal", itemId: "{fc567658-54d2-465e-80f4-85feb79c8598}" }
         - { name: "SplitImage", itemId: "{f039eb26-e4f5-46b9-86dd-ca050ed2fbf2}" }
+        - { name: "Kfmb", itemId: "{ECF540AC-44A7-42DF-A0BD-74B64F17541A}" }
 
     notes:
       - "2026-05-18: Created ArticleHero context component (Issue #11). Default variant."
@@ -2306,6 +2323,7 @@ components:
         - "Default"
         - "WithSidebar"
         - "Wide"
+        - "Kfmb"
 
     templates:
       renderingParams:
@@ -2342,6 +2360,7 @@ components:
         - { name: "Default", itemId: "{4ffc7bca-050e-4867-838d-f3bd19238f8c}" }
         - { name: "WithSidebar", itemId: "{bae365fb-8958-4b03-b494-1beccfd5d897}" }
         - { name: "Wide", itemId: "{fd852024-0d88-48a5-ba05-5783887456ef}" }
+        - { name: "Kfmb", itemId: "{F2ACE804-1FBA-4CEA-AEB8-D3FEA264C0D4}" }
 
     notes:
       - "2026-05-18: Created ArticleBody context component (Issue #12). Default variant."

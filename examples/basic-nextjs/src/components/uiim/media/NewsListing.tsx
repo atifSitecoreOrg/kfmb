@@ -46,3 +46,5 @@ export const Default = async ({ params, rendering, page, fields }: ListingProps)
     </section>
   );
 };
+
+export const Kfmb = Default;

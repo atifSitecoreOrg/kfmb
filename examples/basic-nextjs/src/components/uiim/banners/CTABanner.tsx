@@ -251,3 +251,48 @@ export const Minimal = ({ fields, params, page }: CTABannerProps): JSX.Element =
     </div>
   );
 };
+
+/* Kfmb variant — cream intro, script watermark, uppercase title, orange pill */
+export const Kfmb = ({ fields, params, page }: CTABannerProps): JSX.Element => {
+  const { styles, RenderingIdentifier } = params;
+  const isEditing = page?.mode?.isEditing;
+  if (!fields) return <CTABannerDefaultComponent />;
+
+  return (
+    <div className={cn('component cta-banner', styles)} id={RenderingIdentifier}>
+      <section className="relative w-full overflow-hidden px-4 py-16 text-center md:py-20" style={{ backgroundColor: 'var(--brand-muted)' }}>
+        <p
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-6 -translate-x-1/2 font-[family-name:var(--brand-script-font,cursive)] text-6xl leading-none md:text-8xl"
+          style={{ color: 'color-mix(in srgb, var(--brand-highlight) 75%, white)' }}
+        >
+          Welcome
+        </p>
+        <div className="relative mx-auto max-w-3xl pt-8">
+          {(fields.Title?.value || isEditing) && (
+            <Text
+              field={fields.Title}
+              tag="h2"
+              className="text-3xl font-bold uppercase tracking-[0.16em] sm:text-4xl"
+              style={{ color: 'var(--brand-primary)', fontFamily: 'var(--brand-heading-font)' }}
+            />
+          )}
+          {(fields.Description?.value || isEditing) && (
+            <ContentSdkRichText
+              field={fields.Description}
+              className="mx-auto mt-6 max-w-2xl text-base leading-7"
+              style={{ color: 'var(--brand-fg)', fontFamily: 'var(--brand-body-font)' }}
+            />
+          )}
+          <div className="mt-8">
+            <PrimaryButton
+              field={fields.PrimaryLink}
+              isEditing={isEditing}
+              className="rounded-[var(--brand-button-radius,9999px)] bg-[var(--brand-accent)] px-8 py-2.5 text-[var(--brand-accent-foreground)]"
+            />
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};

@@ -73,3 +73,58 @@ export const Default = async ({ params, rendering, page, fields }: MediaProps): 
     </section>
   );
 };
+
+export const Kfmb = async ({ params, rendering, page, fields }: MediaProps): Promise<JSX.Element> => {
+  const language =
+    (page?.layout?.sitecore?.context as { language?: string } | undefined)?.language || 'en';
+  const news = await loadChildStories(fields?.NewsPath?.value || NEWS_PATH, language);
+  const events = await loadChildStories(fields?.EventsPath?.value || EVENTS_PATH, language);
+  const isEditing = page?.mode?.isEditing;
+
+  return (
+    <section
+      className={`component px-4 py-16 ${params.styles ?? ''}`}
+      style={{ backgroundColor: 'var(--brand-muted)' }}
+      id={params.RenderingIdentifier || rendering.uid}
+    >
+      <div className="mx-auto max-w-6xl text-center">
+        <p className="font-[family-name:var(--brand-script-font,cursive)] text-6xl leading-none md:text-7xl" style={{ color: 'var(--brand-highlight)' }}>
+          News &amp; Events
+        </p>
+        {fields?.Heading && (fields.Heading.value || isEditing) && (
+          <Text tag="h1" field={fields.Heading} className="-mt-3 text-3xl font-bold uppercase tracking-[0.16em] md:text-5xl" style={{ color: 'var(--brand-primary)', fontFamily: 'var(--brand-heading-font)' }} />
+        )}
+        {fields?.Introduction && (fields.Introduction.value || isEditing) && (
+          <Text tag="p" field={fields.Introduction} className="mx-auto mt-4 max-w-2xl text-base leading-7" style={{ color: 'var(--brand-fg)' }} />
+        )}
+        <div className="mt-12 text-left">
+          <h2 className="text-center text-sm font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--brand-primary)' }}>Latest news</h2>
+          <ul className="mt-6 grid gap-4 md:grid-cols-3">
+            {news.map((story) => (
+              <li key={story.id}>
+                <a href={story.href} className="block h-full bg-white p-5" style={{ border: '1px solid var(--brand-border)' }}>
+                  {story.date && <p className="text-xs font-bold uppercase tracking-[0.14em]" style={{ color: 'var(--brand-accent)' }}>{story.date}</p>}
+                  <h3 className="mt-2 text-lg font-bold uppercase tracking-wide" style={{ color: 'var(--brand-primary)' }}>{story.title}</h3>
+                  {story.summary && <p className="mt-3 text-sm leading-6" style={{ color: 'var(--brand-fg)' }}>{story.summary}</p>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="mt-14 text-left">
+          <h2 className="text-center text-sm font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--brand-primary)' }}>Upcoming events</h2>
+          <ul className="mx-auto mt-6 max-w-3xl space-y-4">
+            {events.map((story) => (
+              <li key={story.id}>
+                <a href={story.href} className="block bg-white px-6 py-5 text-left" style={{ border: '1px solid var(--brand-border)' }}>
+                  <h3 className="text-lg font-bold uppercase tracking-wide" style={{ color: 'var(--brand-primary)' }}>{story.title}</h3>
+                  {story.date && <p className="mt-2 text-sm" style={{ color: 'var(--brand-accent)' }}>{story.date}</p>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+};

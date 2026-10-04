@@ -5,3 +5,7 @@ import { CatalogDetail } from '@/lib/content-hub/views';
 export const Default = (props: ComponentProps): JSX.Element => (
   <CatalogDetail {...props} kind="recipe" componentName="RecipeDetail" segment="recipes" />
 );
+
+export const Kfmb = (props: ComponentProps): JSX.Element => (
+  <CatalogDetail {...props} kind="recipe" componentName="RecipeDetail" segment="recipes" appearance="kfmb" />
+);

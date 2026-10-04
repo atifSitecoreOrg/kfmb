@@ -71,3 +71,41 @@ export const Default = ({ params, rendering, page }: ComponentProps): JSX.Elemen
     </article>
   );
 };
+
+export const Kfmb = ({ params, rendering, page }: ComponentProps): JSX.Element => {
+  const fields = (page?.layout?.sitecore?.route?.fields ?? {}) as EventRouteFields;
+  const isEditing = page?.mode?.isEditing;
+  return (
+    <article
+      className={`component px-4 py-16 ${params.styles ?? ''}`}
+      style={{ backgroundColor: 'var(--brand-bg)' }}
+      id={params.RenderingIdentifier || rendering.uid}
+    >
+      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2">
+        {(fields.EventImage?.value?.src || isEditing) && fields.EventImage && (
+          <ContentSdkImage field={fields.EventImage} className="aspect-[4/3] w-full object-cover" />
+        )}
+        <div>
+          <p className="font-[family-name:var(--brand-script-font,cursive)] text-5xl leading-none" style={{ color: 'var(--brand-highlight)' }}>
+            Event
+          </p>
+          {(fields.Title?.value || isEditing) && fields.Title && (
+            <Text tag="h1" field={fields.Title} className="text-3xl font-bold uppercase tracking-[0.12em] md:text-5xl" style={{ color: 'var(--brand-primary)', fontFamily: 'var(--brand-heading-font)' }} />
+          )}
+          <div className="mt-6 flex flex-wrap gap-6 text-sm" style={{ color: 'var(--brand-muted-foreground)' }}>
+            {(fields.EventDate?.value || isEditing) && fields.EventDate && (
+              <DateField field={fields.EventDate} tag="time" render={(date) => new Date(String(date)).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} />
+            )}
+            {(fields.EventLocation?.value || isEditing) && fields.EventLocation && <Text tag="span" field={fields.EventLocation} />}
+          </div>
+          {(fields.EventSummary?.value || isEditing) && fields.EventSummary && (
+            <Text tag="p" field={fields.EventSummary} className="mt-6 text-lg" style={{ color: 'var(--brand-fg)' }} />
+          )}
+          {(fields.EventContent?.value || isEditing) && fields.EventContent && (
+            <ContentSdkRichText field={fields.EventContent} className="prose mt-6 max-w-none" />
+          )}
+        </div>
+      </div>
+    </article>
+  );
+};

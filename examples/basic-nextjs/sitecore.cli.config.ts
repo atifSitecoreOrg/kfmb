@@ -21,6 +21,6 @@ export default defineCliConfig({
   },
   componentMap: {
     paths: ['src/components'],
-    exclude: ['src/components/content-sdk/*'],
+    exclude: ['src/components/content-sdk/*', 'src/components/uiim/kfmb/**'],
   },
 });

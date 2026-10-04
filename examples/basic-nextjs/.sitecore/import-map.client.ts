@@ -39,6 +39,7 @@ import { DICTIONARY_KEYS, DEFAULT_PAGE_SIZE as DEFAULT_PAGE_SIZE_d8a3a96ed689391
 import { Text, NextImage, Link, useSitecore, RichText, DateField, CdpHelper, withDatasourceCheck } from '@sitecore-content-sdk/nextjs';
 import Link_a258c208ba01265ca0aa9c7abae745cc7141aa63 from 'next/link';
 import { identity, event, pageView } from '@sitecore-content-sdk/events';
+import { kfmbPill } from '@/components/uiim/kfmb/chrome';
 import { SmartMedia } from '@/components/uiim/media/SmartMedia';
 import { cn as cn_b4c06b3218abd6b3fb46a1f6d67407cec902c758 } from 'lib/utils';
 import { SearchEmptyResults as SearchEmptyResults_a7fd5bb71665da1ba09c52ff7c1d1a533293f443 } from 'src/components/search-experience/search-components/SearchEmptyResults';
@@ -274,6 +275,12 @@ const importMap = [
       { name: 'identity', value: identity },
       { name: 'event', value: event },
       { name: 'pageView', value: pageView },
+    ]
+  },
+  {
+    module: '@/components/uiim/kfmb/chrome',
+    exports: [
+      { name: 'kfmbPill', value: kfmbPill },
     ]
   },
   {

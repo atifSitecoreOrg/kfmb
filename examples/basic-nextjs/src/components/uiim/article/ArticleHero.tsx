@@ -333,3 +333,38 @@ export const SplitImage = ({ params, page }: ComponentProps): JSX.Element => {
     </div>
   );
 };
+
+/* Kfmb variant — cream editorial hero with script eyebrow and blue title */
+export const Kfmb = ({ params, page }: ComponentProps): JSX.Element => {
+  const { styles, RenderingIdentifier } = params;
+  const isEditing = page?.mode?.isEditing;
+  const routeFields = getRouteFields(page);
+  if (!routeFields) return <ArticleHeroDefaultComponent />;
+  const { Title: title, ArticleImage, ArticlePublicationDate } = routeFields;
+
+  return (
+    <div className={cn('component article-hero', styles)} id={RenderingIdentifier}>
+      <header className="px-4 py-14 text-center" style={{ backgroundColor: 'var(--brand-muted)' }}>
+        <p className="font-[family-name:var(--brand-script-font,cursive)] text-6xl leading-none" style={{ color: 'var(--brand-highlight)' }}>
+          News
+        </p>
+        {(title?.value || isEditing) && (
+          <Text
+            field={title}
+            tag="h1"
+            className="-mt-2 text-3xl font-bold uppercase tracking-[0.12em] md:text-5xl"
+            style={{ color: 'var(--brand-primary)', fontFamily: 'var(--brand-heading-font)' }}
+          />
+        )}
+        {(ArticlePublicationDate?.value || isEditing) && ArticlePublicationDate && (
+          <DateField field={ArticlePublicationDate} tag="time" className="mt-4 block text-sm" style={{ color: 'var(--brand-muted-foreground)' }} />
+        )}
+      </header>
+      {(ArticleImage?.value?.src || isEditing) && (
+        <div className="relative mx-auto aspect-[16/7] max-w-6xl">
+          <SmartMedia field={ArticleImage} fill sizes="100vw" className="object-cover" />
+        </div>
+      )}
+    </div>
+  );
+};

@@ -57,9 +57,11 @@ const NavigationHeaderDefaultComponent = (): JSX.Element => (
 const Logo = ({
   className,
   brandLogo,
+  imageClassName,
 }: {
   className?: string;
   brandLogo?: ImageField;
+  imageClassName?: string;
 }) => {
   const hasImage = brandLogo?.value?.src;
   return (
@@ -71,7 +73,7 @@ const Logo = ({
       {hasImage ? (
         <ContentSdkImage
           field={brandLogo}
-          className="h-8 w-auto object-contain sm:h-10"
+          className={cn('h-8 w-auto object-contain sm:h-10', imageClassName)}
         />
       ) : (
         <>
@@ -325,6 +327,144 @@ export const Transparent = ({ fields, params, page }: NavigationHeaderProps): JS
               isEditing={isEditing}
             />
             <MenuButton open={menuOpen} onClick={() => setMenuOpen(!menuOpen)} />
+          </div>
+        </div>
+        <MobileMenu items={links} open={menuOpen} onClose={() => setMenuOpen(false)} />
+      </header>
+    </div>
+  );
+};
+
+const KFMB_LOGO = 'https://www.kuwaitflourmills.com/Frontend/KFMBC_New/images/logo.svg';
+
+const KFMB_SOCIAL = [
+  { label: 'Instagram', href: 'https://instagram.com/kfmkuwait', path: 'M8 4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4zm8.2 2.2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM12 8.2A3.8 3.8 0 1 0 12 15.8 3.8 3.8 0 0 0 12 8.2z' },
+  { label: 'Facebook', href: 'https://www.facebook.com/kfmkuwait', path: 'M14 8h2V5h-2c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h2.2l.8-3H13V9c0-.6.4-1 1-1z' },
+  { label: 'X', href: 'https://twitter.com/kfmkuwait', path: 'M5 5l5.2 6.8L5.4 19H7.6l3.6-4.6L14.6 19H19l-5.5-7.2L18.4 5H16.2l-3.2 4.2L9.6 5H5z' },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@kfmkuwait', path: 'M14 4c.4 2.2 1.8 3.8 4 4.2v2.4c-1.4 0-2.7-.4-4-1.2v5.4a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .8.1v2.6a3 3 0 1 0 2.2 2.9V4H14z' },
+  { label: 'YouTube', href: 'https://www.youtube.com/kfmkuwait', path: 'M4 8.2A2.2 2.2 0 0 1 6.2 6h11.6A2.2 2.2 0 0 1 20 8.2v7.6A2.2 2.2 0 0 1 17.8 18H6.2A2.2 2.2 0 0 1 4 15.8V8.2zm6 1.2v5.2l4.6-2.6L10 9.4z' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/kuwait-flour-mills-bakeries-company/', path: 'M6 9H8.5V18H6V9zM7.2 5A1.4 1.4 0 1 1 7.2 7.8 1.4 1.4 0 0 1 7.2 5zM11 9h2.4v1.2h.1c.3-.6 1.2-1.3 2.5-1.3 2.6 0 3.1 1.7 3.1 3.9V18H16.6v-4.4c0-1 0-2.4-1.5-2.4s-1.7 1.1-1.7 2.3V18H11V9z' },
+];
+
+function KfmbNavLink({ item }: { item: NavigationLinkFields }): JSX.Element {
+  return (
+    <ContentSdkLink
+      field={item.linkUrl?.jsonValue}
+      className="group text-[12px] font-bold uppercase tracking-[1px]"
+      style={{ color: 'var(--brand-secondary)', fontFamily: 'var(--brand-heading-font)' }}
+    >
+      {item.linkText?.jsonValue?.value && <Text field={item.linkText.jsonValue} />}
+      <span className="mt-[5px] block h-[3px] w-0 bg-[var(--brand-accent)] transition-all duration-300 group-hover:w-full" />
+    </ContentSdkLink>
+  );
+}
+
+/* Kfmb variant — centered emblem, utility row, menu split around the logo */
+export const Kfmb = ({ fields, params, page }: NavigationHeaderProps): JSX.Element => {
+  const { styles, RenderingIdentifier } = params;
+  const isEditing = page?.mode?.isEditing;
+  const [menuOpen, setMenuOpen] = useState(false);
+  const datasource = fields?.data?.datasource;
+  if (!datasource) return <NavigationHeaderDefaultComponent />;
+
+  const links = [...(datasource.children?.results || [])].sort((left, right) => {
+    const rank = (label: string) => {
+      const value = label.toLowerCase();
+      const order = ['about', 'factor', 'media', 'cooking', 'career', 'contact'];
+      const index = order.findIndex((entry) => value.includes(entry));
+      return index === -1 ? order.length : index;
+    };
+    return rank(left.linkText?.jsonValue?.value || '') - rank(right.linkText?.jsonValue?.value || '');
+  });
+  const leftLinks = links.slice(0, 2);
+  const rightLinks = links.slice(2);
+  const brandLogo = datasource.brandLogo?.jsonValue;
+  const hasLogo = Boolean(brandLogo?.value?.src);
+
+  return (
+    <div className={cn('component navigation-header', styles)} id={RenderingIdentifier}>
+      <header className="relative w-full bg-white">
+        <div className="relative mx-auto max-w-6xl px-4">
+          <div className="hidden items-center justify-between pt-4 lg:flex">
+            <div className="flex items-center gap-4 text-[12px] font-bold uppercase tracking-[1px]" style={{ color: 'var(--brand-secondary)' }}>
+              <a href="/Home" className="hover:opacity-70">Home</a>
+              <a
+                href="https://sales.kfmb.com.kw"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex h-8 items-center rounded-full border-2 px-4 text-[11px] normal-case text-white"
+                style={{ backgroundColor: 'var(--brand-secondary)', borderColor: 'var(--brand-accent)' }}
+              >
+                KFMB Online Store
+              </a>
+              <a href="https://www.kuwaitflourmills.com/Home" className="max-w-[11rem] leading-tight hover:opacity-70">
+                Right To Access Information
+              </a>
+            </div>
+            <div className="flex items-center gap-2">
+              {KFMB_SOCIAL.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={item.label}
+                  className="flex h-[25px] w-[25px] items-center justify-center rounded-full text-[10px] font-bold text-white"
+                  style={{
+                    backgroundColor: 'var(--brand-secondary)',
+                    boxShadow: '0 0 0 3px color-mix(in srgb, var(--brand-accent) 50%, transparent)',
+                  }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                    <path d={item.path} />
+                  </svg>
+                </a>
+              ))}
+              {(datasource.ctaLink?.jsonValue?.value?.href || isEditing) && (
+                <ContentSdkLink
+                  field={datasource.ctaLink?.jsonValue}
+                  className="ml-2 inline-flex items-center gap-1 text-[12px] font-bold"
+                  style={{ color: 'var(--brand-secondary)', background: 'none' }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+                    <circle cx="12" cy="8" r="3.2" />
+                    <path d="M5 19c1.4-3 3.8-4.5 7-4.5S17.6 16 19 19" />
+                  </svg>
+                  {datasource.ctaLabel?.jsonValue?.value ? <Text field={datasource.ctaLabel.jsonValue} /> : 'Login'}
+                </ContentSdkLink>
+              )}
+              <a href="https://www.kuwaitflourmills.com/ar/Home" lang="ar" className="ml-1 text-[15px] font-black" style={{ color: 'var(--brand-secondary)' }}>
+                عربي
+              </a>
+            </div>
+          </div>
+
+          <div className="relative flex items-center justify-center py-3 lg:min-h-[4.75rem] lg:py-2">
+            <div className="relative z-10 lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">
+              {hasLogo ? (
+                <Logo brandLogo={brandLogo} imageClassName="h-[92px] w-auto sm:h-[110px]" className="shrink-0" />
+              ) : (
+                <a href="/Home">
+                  <img src={KFMB_LOGO} alt="Kuwait Flour Mills & Bakeries" className="h-[92px] w-auto sm:h-[110px]" />
+                </a>
+              )}
+            </div>
+            <nav className="hidden w-full grid-cols-[1fr_9.5rem_1fr] items-center lg:grid">
+              <div className="flex items-center justify-end gap-5 pr-3">
+                {leftLinks.map((item) => (
+                  <KfmbNavLink key={item.id} item={item} />
+                ))}
+              </div>
+              <span aria-hidden />
+              <div className="flex items-center justify-start gap-5 pl-3">
+                {rightLinks.map((item) => (
+                  <KfmbNavLink key={item.id} item={item} />
+                ))}
+              </div>
+            </nav>
+            <div className="absolute right-0 top-3 lg:hidden">
+              <MenuButton open={menuOpen} onClick={() => setMenuOpen(!menuOpen)} />
+            </div>
           </div>
         </div>
         <MobileMenu items={links} open={menuOpen} onClose={() => setMenuOpen(false)} />

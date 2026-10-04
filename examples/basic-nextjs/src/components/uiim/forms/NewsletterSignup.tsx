@@ -194,6 +194,42 @@ export const Banner = ({ fields, params, page }: NewsletterSignupProps): JSX.Ele
 /* ────────────────────────────────────────────
    Compact — just input + button, no heading
    ──────────────────────────────────────────── */
+/* Kfmb variant — footer newsletter column: NEWSLETTER heading, email field, orange OK */
+export const Kfmb = ({ fields, params, page }: NewsletterSignupProps): JSX.Element => {
+  const { styles, RenderingIdentifier } = params;
+  const isEditing = page?.mode?.isEditing;
+  const [submitted, setSubmitted] = useState(false);
+  if (!fields) return <NewsletterSignupDefaultComponent />;
+
+  return (
+    <div className={cn('component newsletter-signup', styles)} id={RenderingIdentifier}>
+      <section className="w-full px-4 py-10" style={{ backgroundColor: 'var(--brand-footer-bg)', color: 'var(--brand-footer-fg)' }}>
+        <div className="mx-auto max-w-sm">
+          {(fields.Title?.value || isEditing) && (
+            <Text
+              field={fields.Title}
+              tag="h2"
+              className="text-sm font-bold uppercase tracking-[0.18em]"
+              style={{ fontFamily: 'var(--brand-heading-font)' }}
+            />
+          )}
+          <div className="mt-4">
+            <FormRow
+              fields={fields}
+              isEditing={isEditing}
+              submitted={submitted}
+              onSubmit={() => setSubmitted(true)}
+              inputClassName="border-white/40 bg-white text-[var(--brand-fg)]"
+              buttonClassName="rounded-[var(--brand-button-radius,9999px)] px-5"
+              buttonStyle={{ backgroundColor: 'var(--brand-accent)', color: 'var(--brand-accent-foreground)' }}
+            />
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
 export const Compact = ({ fields, params, page }: NewsletterSignupProps): JSX.Element => {
   const { styles, RenderingIdentifier } = params;
   const isEditing = page?.mode?.isEditing;

@@ -289,3 +289,61 @@ export const IconLeft = ({ fields, params, page }: FeatureHighlightProps): JSX.E
     </div>
   );
 };
+
+/* Kfmb variant — yellow curve, script watermark, food photograph on the right */
+export const Kfmb = ({ fields, params, page }: FeatureHighlightProps): JSX.Element => {
+  const { styles, RenderingIdentifier } = params;
+  const isEditing = page?.mode?.isEditing;
+  if (!fields) return <FeatureHighlightDefaultComponent />;
+
+  return (
+    <div className={cn('component feature-highlight', styles)} id={RenderingIdentifier}>
+      <section className="grid min-h-[22rem] w-full bg-white lg:grid-cols-2">
+        <div className="relative flex items-center overflow-hidden px-6 py-14 md:px-12">
+          <div
+            aria-hidden
+            className="absolute -left-16 top-0 h-full w-40 -skew-x-12"
+            style={{ backgroundColor: 'var(--brand-highlight)' }}
+          />
+          <div className="relative z-10 mx-auto max-w-md text-center">
+            {(fields.EyebrowText?.value || isEditing) && (
+              <Text
+                field={fields.EyebrowText}
+                tag="p"
+                className="font-[family-name:var(--brand-script-font,cursive)] text-6xl leading-none"
+                style={{ color: 'var(--brand-highlight)' }}
+              />
+            )}
+            {(fields.Title?.value || isEditing) && (
+              <Text
+                field={fields.Title}
+                tag="h2"
+                className="-mt-2 text-3xl font-bold uppercase tracking-[0.14em]"
+                style={{ color: 'var(--brand-primary)', fontFamily: 'var(--brand-heading-font)' }}
+              />
+            )}
+            {(fields.Description?.value || isEditing) && (
+              <ContentSdkRichText
+                field={fields.Description}
+                className="mt-4 text-base leading-7"
+                style={{ color: 'var(--brand-fg)', fontFamily: 'var(--brand-body-font)' }}
+              />
+            )}
+            {(fields.PrimaryLink?.value?.href || isEditing) && (
+              <ContentSdkLink
+                field={fields.PrimaryLink}
+                className="mt-8 inline-flex items-center justify-center rounded-[var(--brand-button-radius,9999px)] px-8 py-2.5 text-sm font-semibold"
+                style={{ backgroundColor: 'var(--brand-accent)', color: 'var(--brand-accent-foreground)' }}
+              />
+            )}
+          </div>
+        </div>
+        <div className="relative min-h-[18rem]">
+          {(fields.FeatureImage?.value?.src || isEditing) && (
+            <SmartMedia field={fields.FeatureImage} fill sizes="50vw" className="object-cover" />
+          )}
+        </div>
+      </section>
+    </div>
+  );
+};
